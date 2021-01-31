@@ -21,6 +21,10 @@
 ### 问题描述
 在本项目的设定中，一个多方数据协作任务的参与主体包括数据源方、算力提供方、算法提供方和数据应用方。联合计算问题通常可以用下图的嵌套结构来表示：一个数据源可由多个子数据源构成，一个远程算法可应用在多个数据源和多个计算力上，一个任务也可以由多个算法阶段构成。
 
+<div align="center">
+ <img src="./figures/1.png" width="50%">
+</div>
+
 数据、算力、算法等都可以被理解为资产，用数据Token(DataToken, DT)来进行唯一标识，不同资产具有不同的元信息(metadata)，用分布式文档对象DDO来表示。链上维护了一份DT注册表，可以快速定位链下DDO的IPFS存储位置：
 
 ```
@@ -28,11 +32,15 @@ DT标识符在链上注册为：{DT, owner_address, storage_path, proof}
 DDO在链下存储为：{DT，proof，services: [type, endpoint, child_dts, supported_ops, workflows, extra_params]}
 ```
 
-其中proof=hash(metadata)，type区分数据、算力、算法资源，endpoint为服务端点，extra_params里可包含名称、描述、提供方、价格等信息。child-dts=[{0: dt_0}, {1: dt_1}, ..., {n: dt_n}]，为空则表示底层资源。一个企业数据源DDO可以用这样的结构来表示，其中包含多个用户数据构成的DT列表。
+其中proof=hash(metadata)，type区分数据、算力、算法资源，endpoint为服务端点，extra_params里可包含名称、描述、提供方、价格等信息。child_dts=[{0: dt_0}, {1: dt_1}, ..., {n: dt_n}]，为空则表示底层资源。一个企业数据源DDO可以用这样的结构来表示，其中包含多个用户数据构成的DT列表。
 
 ### 远程计算规范
 
 为了实现跨域的分布式计算，资产DDO的数据结构不仅包含多个子DT标识符，还应包含对这些资源的操作代码哈希。以两家银⾏联合建模为例，第三⽅科技公司提供算法：
+
+<div align="center">
+ <img src="./figures/2.png" width="50%">
+</div>
 
 其中，op_1、op_2为秘密共享操作，op_3、op_4为SS碎片上的联合AI操作。算法DDO中包含了对四个资源的工作流存证，表示私域数据库中的原始数据经过秘密共享后，发送到联邦域算力上进行联合建模。
 
@@ -40,7 +48,12 @@ DDO在链下存储为：{DT，proof，services: [type, endpoint, child_dts, supp
 
 资产所有者应能快速设置DDO中的远程计算规范，如支持的操作、分布式工作流等，为此首先要规范化操作代码，形成一系列可信的远程代码模版。操作代码也可以用其哈希来唯一标识并上链，代码脚本存储在IPFS当中，这个步骤可以由系统管理员来执行。这样，DDO中的supported_ops和workflows就可以用统一的代码标识符来进行配置：
 
-当child-dts列表为空时，workflows也应该为空。此时supported_ops表示该底层资产支持的本地代码操作(的链上标识符集合)，例如支持联邦学习的移动端用户数据。当child-dts列表不为空时，supported_ops表示该资产的所有子dt一致支持的操作；同时可在workflow中定义更为复杂的分布式工作流，set_ops中包含了对各个子dt的具体操作，configs中可附带运行参数或指明工作流的计算顺序。
+```
+supported_ops: [{0:op_0},...,{m:op_m}]
+workflows: [set_ops:[{0:dt_0_op},...,{n:dt_n_op}],configs]
+```
+
+当child_dts列表为空时，workflows也应该为空。此时supported_ops表示该底层资产支持的本地代码操作(的链上标识符集合)，例如支持联邦学习的移动端用户数据。当child_dts列表不为空时，supported_ops表示该资产的所有子dt一致支持的操作；同时可在workflow中定义更为复杂的分布式工作流，set_ops中包含了对各个子dt的具体操作，configs中可附带运行参数或指明工作流的计算顺序。
 
 ### 任务工作市场
 高层资产在执行实际计算前，需要获取低层资产的使用授权。而低层资产通常会验证高层资产DDO中的操作代码是否符合自己的支持条款，满足即在链上授权。在复杂的实际问题中，可以使用层次化的代理结构，例如，dt_1授权给dt_2，dt_2授权给dt_3，可以认为dt_3所有者获取了dt_1资产的本地操作权限。通过这种方式，算法提供方可以在企业数据源下的用户数据本地执行计算。
