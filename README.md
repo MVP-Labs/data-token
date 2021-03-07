@@ -1,9 +1,10 @@
 <h1 align="center">DataToken</h1>
 
-## 概览
 <div align="center">
  <img src="./docs/figures/tree.png" width="75%">
 </div>
+
+## 概览
 
 本项目为Ownership Labs开发的跨域分布式数据权限管理和链下可信计算中间件(DataToken SDK)，由[LatticeX](https://github.com/LatticeX-Foundation)基金会提供支持，细节可查阅[Grants](./docs/grants_cn.md)和[论文](./docs/white_paper.md)。该SDK利用了区块链的多方对等共识和信息不可篡改等可信特征，实现了数据归属确权、数据服务授权和数据计算追溯。
 
