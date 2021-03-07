@@ -1,6 +1,9 @@
 <h1 align="center">DataToken</h1>
 
 ## 概览
+<div align="center">
+ <img src="./docs/figures/tree.png" width="75%">
+</div>
 
 本项目为Ownership Labs开发的跨域分布式数据权限管理和链下可信计算中间件(DataToken SDK)，由[LatticeX](https://github.com/LatticeX-Foundation)基金会提供支持，细节可查阅[Grants](./docs/grants_cn.md)和[论文](./docs/white_paper.md)。该SDK利用了区块链的多方对等共识和信息不可篡改等可信特征，实现了数据归属确权、数据服务授权和数据计算追溯。
 
@@ -49,9 +52,9 @@ $ python tests/test.py
 
 当你运行的足够多次或修改其中的约束参数，命令后将打印出数据资产共享利用的全流程：
 <div align="center">
- <img src="./docs/figures/test.png" width="70%">
+ <img src="./docs/figures/test.png" width="95%">
 </div>
 
 ### MVP用例
 
-我们还提供了DataToken在实际场景中的用例，分别是企业间数据协作、用户级边缘计算和可追溯的隐私AI，查看[examples](./examples)和[Compute-to-Data](https://github.com/ownership-labs/Compute-to-Data)。
+我们还提供了DataToken在实际场景中的用例，包括企业间数据协作和用户级边缘计算(查看[examples](./examples))。同时，我们针对隐私AI问题，设计了可追溯计算的私域数据服务网格，帮助资产方快速定义本地计算服务并自动校验外部计算请求，第三方科学家可在数据可用不可见的情况下完成远程的隐私AI计算，查看[Compute-to-Data](https://github.com/ownership-labs/Compute-to-Data)。
