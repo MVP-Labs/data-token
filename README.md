@@ -18,16 +18,18 @@
 | [dt-sdk](https://github.com/ownership-labs/DataToken/dt_sdk)           | 为开发者提供DataToken在数据协作中的完整功能                                         |
 | [rtt-tracer](https://github.com/ownership-labs/Compute-to-Data)            | 面向远程资产的可追溯、隐私保护的机器学习 |
 
-## SDK功能特性
+## SDK使用指南
 
 ### 功能特性
 
 该仓库下的dt-sdk封装了数据协作过程中的几个关键服务模块，包括系统管理模块、资产管理模块、任务工作模块、跨域追溯模块和服务验证模块。不同的业务角色可以使用不同的模块：
 
 - 系统管理员可通过系统模块来管理链上的资产提供方和可信算子模版；
-- 资产提供方和聚合方可通过资产模块来实现数据资产的发布、授权和聚合；
-- 需求方和求解方可通过任务工作模块来完成任务发布、计算求解和远程执行验证；
+- 资产提供方和聚合方可通过资产模块来实现数据资产和数据联合体的发布、服务验证和授权聚合；
+- 需求方和求解方可通过任务工作模块来完成任务发布和计算求解，资产方也可快速验证远程计算；
 - 监管方可通过跨域追溯模块来确认资产的合理利用，交易方也可根据资产的来源和历史生命周期来定价。
+
+关于数据联合体的定义和分布式可信计算的服务规范可参考[dt-asset](https://github.com/ownership-labs/dt-asset)仓库。
 
 ### 运行流程
 
@@ -44,6 +46,11 @@ $ export PYTHONPATH=$PYTHONPATH:../dt-asset:../dt-web3:../DataToken
 $ pip install -r requirements.txt
 $ python tests/test.py
 ```
+
+当你运行的足够多次或修改其中的约束参数，命令后将打印出数据资产共享利用的全流程：
+<div align="center">
+ <img src="./docs/figures/test.png" width="70%">
+</div>
 
 ### MVP用例
 
