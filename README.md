@@ -31,7 +31,7 @@ Specifically, only when the pre-declared constraints are satisfied, assets will 
 
 The dt-sdk implements several key services for data collaboration, including System module, Asset module, Job module, Tracer module and Verifier module. Different modules are designed for different participators:
 
-- System administrators can manage asset providers and trusted operators that are registed in the blockchain by using the System module;
+- System administrators can manage asset providers and trusted operators that are registered in the blockchain by using the System module;
 - Asset providers and aggregators can use the Asset module to publish datasets/computation/algorithms, and validate service agreements and then authorize the aggregation of data unions;
 - Demanders and solvers can use the Job module to create tasks and submit solutions (e.g., off-chain data collaboration). Asset providers can also quickly verify remote execution;
 - Regulatory parties can use the Tracer module to check the whole lifecycle of cross-domain data sharing and utilization, ensuring the user privacy and legality of data monetization. Also, the data traders can price data as assets based on their origins and historical market information.
