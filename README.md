@@ -1,44 +1,48 @@
 <h1 align="center">DataToken</h1>
 
-## 概览
+## Overview
 <div align="center">
  <img src="./docs/figures/tree.png" width="75%">
 </div>
 
-本项目为Ownership Labs开发的跨域分布式数据权限管理和链下可信计算中间件(DataToken SDK)，由[LatticeX](https://github.com/LatticeX-Foundation)基金会提供支持，细节可查阅[Grants](./docs/grants_cn.md)和[论文](./docs/white_paper.md)。该SDK利用了区块链的多方对等共识和信息不可篡改等可信特征，实现了数据归属确权、数据服务授权和数据计算追溯。
+[中文版](./README_CN.md)
 
-## 核心理念
+This project implements a new decentralized data management and off-chain trusted computing middleware, DataToken SDK. It is developed by Ownership Labs and supported by the [LatticeX](https://github.com/LatticeX-Foundation) Foundation. Design philosophies can be found in the [grants](./docs/grants_cn.md) and [paper](./docs/white_paper.md). The SDK leverages the trusted features of blockchains to return data ownership to its owners while maintaining the computability of data.
 
-项目设计了资产层次化聚合和计算约束满足方案，允许资产方在其服务条款中声明可信操作的许可列表，同时聚合方可在多个不同域的数据资产和算力资产上定义可信的分布式计算工作流。当满足资产预先声明的操作规范时，聚合计算才会被授权，且该过程可自动执行，最终实现(数据)资产一次发布、多次出售。数据共享计算的全生命周期将变得更透明合规且具有可追溯性，我们希望交易市场上出现契合数据流动结构的数据联合体和自主经济代理。
+### Motivation
 
-## 系统组成
+Our vision is to make the data flows more transparent. To achieve it, we design a new data service specification for traceable computation and hierarchical aggregation. Data owners can declare a permitted list of trusted operators and related constraints in the data service terms. Data aggregators can define trusted, distributed computing workflows on multiple data assets, formalizing data in different domains into an aggregated data union. Data buyers can directly purchase aggregated datasets and confirm the origins of each data inside it.
 
-| 模块                     | 描述                                                                                     |
+Specifically, only when the pre-declared constraints are satisfied, assets will be authorized for aggregated computation. This process can be executed automatically without manually audits, ultimately enabling data assets to be defined once and sold multiple times. This design is consistent with the structure of real-world data flows, and the whole lifecycle of data sharing and utilization becomes more transparent, compliant and traceable.
+
+### System Design
+
+| Module                     | Description                                                                                     |
 | -------------------------- | ----------------------------------------------------------------------------------------------- |
-| [dt-contracts](https://github.com/ownership-labs/dt-contracts)            | 数据通证颁发、可信算子发布、任务市场等合约                                          |
-| [dt-web3](https://github.com/ownership-labs/dt-web3)            | 与链上合约交互的链下模型类和web3工具集                                          |
-| [dt-asset](https://github.com/ownership-labs/dt-asset)             | 资产元数据管理和跨域可信计算服务规范                                           |
-| [dt-sdk](https://github.com/ownership-labs/DataToken/dt_sdk)           | 为开发者提供DataToken在数据协作中的完整功能                                         |
-| [rtt-tracer](https://github.com/ownership-labs/Compute-to-Data)            | 面向远程资产的可追溯、隐私保护的机器学习 |
+| [dt-contracts](https://github.com/ownership-labs/dt-contracts)            | smart contracts for data token                                          |
+| [dt-web3](https://github.com/ownership-labs/dt-web3)            | entry point for accessing datatoken contracts                                          |
+| [dt-asset](https://github.com/ownership-labs/dt-asset)             | off-chain asset descriptor using on-chain operators                                           |
+| [dt-sdk](https://github.com/ownership-labs/DataToken/dt_sdk)           | decentralized access control for off-chain data sharing and monetization                                         |
+| [rtt-tracer](https://github.com/ownership-labs/Compute-to-Data)            | traceable, privacy-preserving ML using data you cannot see |
 
-## SDK使用指南
+## SDK Guides
 
-### 功能特性
+### highlights
 
-该仓库下的dt-sdk封装了数据协作过程中的几个关键服务模块，包括系统管理模块、资产管理模块、任务工作模块、跨域追溯模块和服务验证模块。不同的业务角色可以使用不同的模块：
+The dt-sdk implements several key services for data collaboration, including System module, Asset module, Job module, Tracer module and Verifier module. Different modules are designed for different participators:
 
-- 系统管理员可通过系统模块来管理链上的资产提供方和可信算子模版；
-- 资产提供方和聚合方可通过资产模块来实现数据资产和数据联合体的发布、服务验证和授权聚合；
-- 需求方和求解方可通过任务工作模块来完成任务发布和计算求解，资产方也可快速验证远程计算；
-- 监管方可通过跨域追溯模块来确认资产的合理利用，交易方也可根据资产的来源和历史生命周期来定价。
+- System administrators can manage asset providers and trusted operators that are registed in the blockchain by using the System module;
+- Asset providers and aggregators can use the Asset module to publish datasets/computation/algorithms, and validate service agreements and then authorize the aggregation of data unions;
+- Demanders and solvers can use the Job module to create tasks and submit solutions (e.g., off-chain data collaboration). Asset providers can also quickly verify remote execution;
+- Regulatory parties can use the Tracer module to check the whole lifecycle of cross-domain data sharing and utilization, ensuring the user privacy and legality of data monetization. Also, the data traders can price data as assets based on their origins and historical market information.
 
-关于数据联合体的定义和分布式可信计算的服务规范可参考[dt-asset](https://github.com/ownership-labs/dt-asset)仓库。
+The definition of data unions and trusted workflow service specification can be found in the [dt-asset](https://github.com/ownership-labs/dt-asset) repository.
 
-### 运行流程
+### play with it
 
-在运行测试前，首先需要部署dt-contracts到alaya私链，参考[部署教程](https://github.com/ownership-labs/dt-contracts)，使用其中预先设置的四个账户。同时配置DataToken目录下的config.ini，包括artifacts_path和address_file。
+You first need to deploy dt-contracts to the Alaya private chain, refer to [Deployment Tutorial](https://github.com/ownership-labs/dt-contracts). We use the four predefined accounts for testing, and also set up the config.ini in the DataToken directory (e.g., artifacts_path and address_file).
 
-使用如下命令测试：
+Run the following commands:
 ```
 $ git clone https://github.com/ownership-labs/DataToken
 $ git clone https://github.com/ownership-labs/dt-contracts
@@ -50,11 +54,11 @@ $ pip install -r requirements.txt
 $ python tests/test.py
 ```
 
-当你运行的足够多次或修改其中的约束参数，命令后将打印出数据资产共享利用的全流程：
+When you run it multiple times or modify the constraint parameters, the command line will print out the whole lifecycle of data sharing and utilization.
 <div align="center">
  <img src="./docs/figures/test.png" width="95%">
 </div>
 
-### MVP用例
+### examples and tutorials
 
-我们还提供了DataToken在实际场景中的用例，包括企业间数据协作和用户级边缘计算(查看[examples](./examples))。同时，我们针对隐私AI问题，设计了可追溯计算的私域数据服务网格，帮助资产方快速定义本地计算服务并自动校验外部计算请求，第三方科学家可在数据可用不可见的情况下完成远程的隐私AI计算，查看[Compute-to-Data](https://github.com/ownership-labs/Compute-to-Data)。
+We provide several use cases, including cross-site data collaboration (between enterprizes) and edge federated learning (between users), see the [examples](. /examples). We also design a smart data grid for serving private machine learning of sensitive data assets, see the [Compute-to-Data](https://github.com/ownership-labs/Compute-to-Data). With DataToken combined, data owners can quickly define allowed AI services and the data grid will automatically verify the external data usage requests. Third-party scientists can start remote executions and get results on data they cannot see. In other words, data owners run the codes on-premise and thus monetize the computation rights of private data.
