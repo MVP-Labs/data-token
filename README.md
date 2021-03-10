@@ -31,7 +31,7 @@ Specifically, only when the pre-declared constraints are satisfied, assets will 
 
 The dt-sdk implements several key services for data collaboration, including System module, Asset module, Job module, Tracer module and Verifier module. Different modules are designed for different participators:
 
-- System administrators can manage asset providers and trusted operators that are registered in the blockchain by using the System module;
+- System administrators can manage asset providers and trusted operators that are registered on the blockchain by using the System module;
 - Asset providers and aggregators can use the Asset module to publish datasets/computation/algorithms, and validate service agreements and then authorize the aggregation of data unions;
 - Demanders and solvers can use the Job module to create tasks and submit solutions (e.g., off-chain data collaboration). Asset providers can also quickly verify remote execution;
 - Regulatory parties can use the Tracer module to check the whole lifecycle of cross-domain data sharing and utilization, ensuring the user privacy and legality of data monetization. Also, the data traders can price data as assets based on their origins and historical market information.
@@ -61,4 +61,4 @@ When you run it multiple times or modify the constraint parameters, the command 
 
 ### examples and tutorials
 
-We provide several use cases, including cross-site data collaboration (between enterprizes) and edge federated learning (between users), see the [examples](. /examples). We also design a smart data grid for serving private machine learning of sensitive data assets, see the [Compute-to-Data](https://github.com/ownership-labs/Compute-to-Data). With DataToken combined, data owners can quickly define allowed AI services and the data grid will automatically verify the external data usage requests. Third-party scientists can start remote executions and get results on data they cannot see. In other words, data owners run the codes on-premise and thus monetize the computation rights of private data.
+We provide several use cases, including cross-site data collaboration (between enterprises) and edge federated learning (between users), see the [examples](. /examples). We also design a smart data grid for serving private machine learning of sensitive data assets, see the [Compute-to-Data](https://github.com/ownership-labs/Compute-to-Data). With DataToken combined, data owners can quickly define allowed AI services and the data grid will automatically verify the external data usage requests. Third-party scientists can start remote executions and get results on data they cannot see. In other words, data owners run the codes on-premise and thus monetize the computation rights of private data.
