@@ -2,7 +2,7 @@
 
 ## Overview
 <div align="center">
- <img src="./docs/figures/tree.png" width="100%">
+ <img src="./docs/figures/tree.png" width="95%">
 </div>
 
 [中文版](./README_CN.md)
