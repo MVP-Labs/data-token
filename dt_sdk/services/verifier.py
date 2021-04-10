@@ -34,9 +34,9 @@ class VerifierService(object):
         """Check Admin role for a given address."""
         return self.role_controller.check_role(address, Role.ROLE_ADMIN)
 
-    def check_enterprize(self, id):
+    def check_enterprise(self, id):
         """Check Enterprize role for a given address."""
-        return self.asset_provider.check_enterprize(id)
+        return self.asset_provider.check_enterprise(id)
 
     def check_provider(self, id):
         """Check Provider role for a given address."""
@@ -152,3 +152,4 @@ class VerifierService(object):
         _cdt = DTHelper.dt_to_id(cdt_ddo.dt)
 
         return self.dt_factory.check_clinks(_cdt, child_dts)
+

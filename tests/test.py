@@ -30,15 +30,15 @@ job_service = JobService(config)
 tracer_service = TracerService(config)
 
 ############
-system_service.register_enterprize(
+system_service.register_enterprise(
     org1_account.atp_address, 'org1', 'test_org1', system_account)
 system_service.add_provider(org1_account.atp_address, system_account)
 
-system_service.register_enterprize(
+system_service.register_enterprise(
     org2_account.atp_address, 'org2', 'test_org2', system_account)
 system_service.add_provider(org2_account.atp_address, system_account)
 
-system_service.register_enterprize(
+system_service.register_enterprise(
     org3_account.atp_address, 'org3', 'test_org3', system_account)
 system_service.add_provider(org3_account.atp_address, system_account)
 
@@ -190,3 +190,4 @@ print(job_service.check_remote_compute(ddo4.dt, ddo3.dt,
 
 found = tracer_service.trace_dt_lifecycle([ddo1.dt])
 tracer_service.tracer_print(found)
+

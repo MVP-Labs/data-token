@@ -1,4 +1,4 @@
-"""Enterprize and Asset Provider"""
+"""Enterprise and Asset Provider"""
 # Copyright 2021 The dt-web3 Authors
 # SPDX-License-Identifier: LGPL-2.1-only
 
@@ -12,21 +12,21 @@ logger = logging.getLogger(__name__)
 
 class AssetProvider(ContractBase):
     CONTRACT_NAME = 'AssetProvider'
-    ENTERPRIZE_REGISTER_EVENT = 'EnterprizeRegistered'
+    ENTERPRIZE_REGISTER_EVENT = 'EnterpriseRegistered'
     PROVIDER_ADD_EVENT = 'ProviderAdded'
 
-    def register_enterprize(self, id, name, desc, from_wallet):
+    def register_enterprise(self, id, name, desc, from_wallet):
         """
-        Register a new enterprize on chain by the admin.
+        Register a new enterprise on chain by the admin.
 
-        :param id: refers to the enterprize identifier
-        :param name: refers to the enterprize name
-        :param desc: refers to the enterprize description
+        :param id: refers to the enterprise identifier
+        :param name: refers to the enterprise name
+        :param desc: refers to the enterprise description
         :param from_wallet: the system account
         :return
         """
         tx_hash = self.send_transaction(
-            'registerEnterprize',
+            'registerEnterprise',
             (id, name, desc),
             from_wallet
         )
@@ -36,28 +36,28 @@ class AssetProvider(ContractBase):
         if not bool(receipt and receipt.status == 1):
             raise AssertionError(f'transaction failed with tx id {tx_hash}.')
 
-        topic_param = self.events.EnterprizeRegistered().processReceipt(receipt)
+        topic_param = self.events.EnterpriseRegistered().processReceipt(receipt)
         error_code = topic_param[0]['args']['_code']
 
         if error_code == ErrorCode.SUCCESS:
-            logger.debug(f'sucessfully register enterprize {name} for id {id}')
-        elif error_code == ErrorCode.ENTERPRIZE_EXISTS:
-            raise AssertionError(f'The enterprize already exists for id {id}')
+            logger.debug(f'sucessfully register enterprise {name} for id {id}')
+        elif error_code == ErrorCode.ENTERPRISE_EXISTS:
+            raise AssertionError(f'The enterprise already exists for id {id}')
         else:
             raise AssertionError(f'ERROR_NO_PERMISSION')
 
-    def update_enterprize(self, id, name, desc, from_wallet):
+    def update_enterprise(self, id, name, desc, from_wallet):
         """
-        Update the enterprize on chain by the admin.
+        Update the enterprise on chain by the admin.
 
-        :param id: refers to the enterprize identifier
-        :param name: refers to the enterprize name
-        :param desc: refers to the enterprize description
+        :param id: refers to the enterprise identifier
+        :param name: refers to the enterprise name
+        :param desc: refers to the enterprise description
         :param from_wallet: the system account
         :return
         """
         tx_hash = self.send_transaction(
-            'updateEnterprize',
+            'updateEnterprise',
             (id, name, desc),
             from_wallet
         )
@@ -67,13 +67,13 @@ class AssetProvider(ContractBase):
         if not bool(receipt and receipt.status == 1):
             raise AssertionError(f'transaction failed with tx id {tx_hash}.')
 
-        topic_param = self.events.EnterprizeRegistered().processReceipt(receipt)
+        topic_param = self.events.EnterpriseRegistered().processReceipt(receipt)
         error_code = topic_param[0]['args']['_code']
 
         if error_code == ErrorCode.SUCCESS:
-            logger.debug(f'sucessfully update enterprize {name} for id {id}')
-        elif error_code == ErrorCode.ENTERPRIZE_NOT_EXISTS:
-            raise AssertionError(f'The enterprize do not exists for id {id}')
+            logger.debug(f'sucessfully update enterprise {name} for id {id}')
+        elif error_code == ErrorCode.ENTERPRISE_NOT_EXISTS:
+            raise AssertionError(f'The enterprise do not exists for id {id}')
         else:
             raise AssertionError(f'ERROR_NO_PERMISSION')
 
@@ -129,14 +129,14 @@ class AssetProvider(ContractBase):
         else:
             raise AssertionError(f'ERROR_NO_PERMISSION')
 
-    def check_enterprize(self, id):
+    def check_enterprise(self, id):
         """
-        Check enterprize role.
+        Check enterprise role.
 
-        :param id: refers to the enterprize identifier
+        :param id: refers to the enterprise identifier
         :return: bool
         """
-        return self.contract_concise.isEnterprize(id)
+        return self.contract_concise.isEnterprise(id)
 
     def check_provider(self, id):
         """
@@ -147,18 +147,18 @@ class AssetProvider(ContractBase):
         """
         return self.contract_concise.isProvider(id)
 
-    def get_enterprize(self, id):
+    def get_enterprise(self, id):
         """
-        Get the enterprize info.
+        Get the enterprise info.
 
-        :param id: refers to the enterprize identifier
-        :return: Enterprize struct
+        :param id: refers to the enterprise identifier
+        :return: Enterprise struct
         """
-        return self.contract_concise.getEnterprizebyId(id)
+        return self.contract_concise.getEnterprisebyId(id)
 
     def get_issuer_names(self, idx):
         """
-        Get the list of names of issuer enterprizes.
+        Get the list of names of issuer enterprises.
 
         :return: string[]
         """
