@@ -155,3 +155,11 @@ class AssetProvider(ContractBase):
         :return: Enterprize struct
         """
         return self.contract_concise.getEnterprizebyId(id)
+
+    def get_issuer_names(self, idx):
+        """
+        Get the list of names of issuer enterprizes.
+
+        :return: string[]
+        """
+        return self.contract_concise.getIssuerNames(idx)

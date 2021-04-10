@@ -139,5 +139,20 @@ print(job_id)
 print(keeper.task_market.get_job(job_id))
 
 print(keeper.task_market.get_cdt_jobs(keeper.web3.toBytes(hexstr=dt3)))
+
+#####
+print('marketplace info')
+print(keeper.dt_factory.get_dt_num())
+print(keeper.op_template.get_template_num())
+print(keeper.task_market.get_job_num())
+print(keeper.task_market.get_task_num()())
+
+dt_idx, owners, issuers, checksums, isLeafs, ipfsPaths, _ = keeper.dt_factory.get_available_dts()
+print(dt_idx)
+
+print(keeper.asset_provider.get_issuer_names(issuers))
+
+#####
 print()
 print('successfully finished')
+

@@ -106,3 +106,11 @@ class OpTemplate(ContractBase):
         :return: int blockUpdated
         """
         return self.contract_concise.getBlockNumberUpdated(tid)
+
+    def get_template_num(self):
+        """
+        Get the total numbers of op templates.
+
+        :return: int
+        """
+        return self.contract_concise.getTemplateNum()

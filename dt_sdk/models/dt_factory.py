@@ -182,6 +182,22 @@ class DTFactory(ContractBase):
         """
         return self.contract_concise.CLinksCheck(cdt, child_dts)
 
+    def get_dt_num(self):
+        """
+        Get the total numbers of datatokens.
+
+        :return: int
+        """
+        return self.contract_concise.getDTNum()
+
+    def get_available_dts(self):
+        """
+        Get all the available datatokens.
+
+        :return: DataToken[]
+        """
+        return self.contract_concise.getDTMap()
+
     ######################
     def get_owner_assets(self, address):
         """

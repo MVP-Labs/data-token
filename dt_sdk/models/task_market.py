@@ -92,6 +92,22 @@ class TaskMarket(ContractBase):
         :return: Job struct
         """
         return self.contract_concise.getJobbyId(job_id)
+        
+    def get_task_num(self):
+        """
+        Get the total numbers of tasks.
+
+        :return: int
+        """
+        return self.contract_concise.getTaskNum()
+
+    def get_job_num(self):
+        """
+        Get the total numbers of jobs.
+
+        :return: int
+        """
+        return self.contract_concise.getJobNum()
 
     ######################
     def get_cdt_jobs(self, cdt):
