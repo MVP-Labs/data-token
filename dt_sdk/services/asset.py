@@ -4,12 +4,12 @@
 
 import logging
 
-from dt_web3.keeper import Keeper
 from dt_asset.document.ddo import DDO
 from dt_asset.document.dt_helper import DTHelper
 from dt_asset.storage.ipfs_provider import IPFSProvider
 from dt_asset.storage.asset_resolve import resolve_asset
-from dt_sdk.verifier import VerifierService
+from dt_sdk.models.keeper import Keeper
+from dt_sdk.services.verifier import VerifierService
 
 logger = logging.getLogger(__name__)
 

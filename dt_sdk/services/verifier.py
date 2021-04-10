@@ -5,13 +5,13 @@
 import logging
 
 from eth_utils import remove_0x_prefix
-from dt_web3.keeper import Keeper
-from dt_web3.models.constants import Role
-from dt_web3.toolkit.utils import personal_ec_recover
 from dt_asset.document.dt_helper import DTHelper
 from dt_asset.storage.asset_resolve import resolve_asset, resolve_op
 from dt_asset.utils.utilities import convert_to_string
 from dt_asset.agreement.constraint import validate_leaf_template, validate_service_agreement
+from dt_sdk.models.keeper import Keeper
+from dt_sdk.models.constants import Role
+from dt_sdk.toolkit.utils import personal_ec_recover
 
 logger = logging.getLogger(__name__)
 

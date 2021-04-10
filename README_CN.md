@@ -20,7 +20,6 @@
 | 模块                     | 描述                                                                                     |
 | -------------------------- | ----------------------------------------------------------------------------------------------- |
 | [dt-contracts](https://github.com/ownership-labs/dt-contracts)            | 数据通证颁发、可信算子发布、任务市场等合约                                          |
-| [dt-web3](https://github.com/ownership-labs/dt-web3)            | 与链上合约交互的链下模型类和web3工具集                                          |
 | [dt-asset](https://github.com/ownership-labs/dt-asset)             | 资产元数据管理和跨域可信计算服务规范                                           |
 | [dt-sdk](https://github.com/ownership-labs/DataToken/dt_sdk)           | 为开发者提供DataToken在数据协作中的完整功能                                         |
 | [rtt-tracer](https://github.com/ownership-labs/Compute-to-Data)            | 面向远程资产的可追溯、隐私保护的机器学习 |
@@ -46,10 +45,9 @@
 ```
 $ git clone https://github.com/ownership-labs/DataToken
 $ git clone https://github.com/ownership-labs/dt-contracts
-$ git clone https://github.com/ownership-labs/dt-web3
 $ git clone https://github.com/ownership-labs/dt-asset
 $ cd DataToken
-$ export PYTHONPATH=$PYTHONPATH:../dt-asset:../dt-web3:../DataToken
+$ export PYTHONPATH=$PYTHONPATH:../dt-asset:../DataToken
 $ pip install -r requirements.txt
 $ python tests/test.py
 ```

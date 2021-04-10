@@ -1,12 +1,12 @@
 # """Demo"""
 
-from dt_web3.toolkit.wallet import Wallet
-from dt_web3.toolkit.utils import hash_and_sign
-from dt_sdk.system import SystemService
-from dt_sdk.asset import AssetService
-from dt_sdk.job import JobService
-from dt_sdk.tracer import TracerService
 from dt_sdk.config import Config
+from dt_sdk.toolkit.wallet import Wallet
+from dt_sdk.toolkit.utils import hash_and_sign
+from dt_sdk.services.system import SystemService
+from dt_sdk.services.asset import AssetService
+from dt_sdk.services.job import JobService
+from dt_sdk.services.tracer import TracerService
 
 config = Config(filename='./config.ini')
 

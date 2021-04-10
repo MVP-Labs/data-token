@@ -20,7 +20,6 @@ Specifically, only when the pre-declared constraints are satisfied, assets will 
 | Module                     | Description                                                                                     |
 | -------------------------- | ----------------------------------------------------------------------------------------------- |
 | [dt-contracts](https://github.com/ownership-labs/dt-contracts)            | smart contracts for data token                                          |
-| [dt-web3](https://github.com/ownership-labs/dt-web3)            | entry point for accessing datatoken contracts                                          |
 | [dt-asset](https://github.com/ownership-labs/dt-asset)             | off-chain asset descriptor using on-chain operators                                           |
 | [dt-sdk](https://github.com/ownership-labs/DataToken/dt_sdk)           | decentralized access control for off-chain data sharing and monetization                                         |
 | [rtt-tracer](https://github.com/ownership-labs/Compute-to-Data)            | traceable, privacy-preserving ML using data you cannot see |
@@ -46,10 +45,9 @@ Run the following commands:
 ```
 $ git clone https://github.com/ownership-labs/DataToken
 $ git clone https://github.com/ownership-labs/dt-contracts
-$ git clone https://github.com/ownership-labs/dt-web3
 $ git clone https://github.com/ownership-labs/dt-asset
 $ cd DataToken
-$ export PYTHONPATH=$PYTHONPATH:../dt-asset:../dt-web3:../DataToken
+$ export PYTHONPATH=$PYTHONPATH:../dt-asset:../DataToken
 $ pip install -r requirements.txt
 $ python tests/test.py
 ```
