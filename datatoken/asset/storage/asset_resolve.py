@@ -35,6 +35,18 @@ def resolve_asset(dt, keeper_dt_factory):
     return data, ddo
 
 
+def resolve_asset_by_url(metadata_url):
+    ipfs_client = IPFSProvider()
+    ddo_json = ipfs_client.get(metadata_url)
+    if not ddo_json:
+        return None
+
+    ddo = DDO()
+    ddo.from_dict(ddo_json)
+
+    return ddo
+
+
 def resolve_op(tid, keeper_op_template):
     """
     Resolve a tid to its corresponding OpTemplate.

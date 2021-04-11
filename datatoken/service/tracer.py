@@ -45,6 +45,15 @@ class TracerService(object):
         _dt = DTHelper.dt_to_id_bytes(dt)
         return self.dt_factory.get_dt_owner(_dt)
 
+    def get_marketplace_stat(self):
+        """Get the statistics information."""
+        dt_nums = self.dt_factory.get_dt_num()
+        template_nums = self.op_template.get_template_num()
+        task_nums = self.task_market.get_task_num()
+        job_nums = self.task_market.get_job_num()
+
+        return dt_nums, template_nums, task_nums, job_nums
+
     def trace_owner_assets(self, address):
         """Get all assets for a given owner."""
         return self.dt_factory.get_owner_assets(address)
@@ -57,6 +66,31 @@ class TracerService(object):
     def trace_cdt_jobs(self, cdt):
         """Get the list of previous jobs for a given cdt."""
         return self.task_market.get_cdt_jobs(cdt)
+
+    def trace_data_union(self, ddo, prefix):
+        """
+        Trace the data union structure.
+
+        :param ddo: metadata object.
+        :param prefix: fixed prefix path, then find its subsequent paths.
+        :return all_paths: a list of found prefix + subsequent paths
+        """
+        all_paths = []
+
+        if ddo.is_cdt:
+            for child_dt in ddo.child_dts:
+                new_path = prefix.copy()
+                new_path.append(child_dt)
+
+                _, child_ddo = resolve_asset(child_dt, self.dt_factory)
+
+                if child_ddo.is_cdt:
+                    path_lists = self.trace_data_union(child_ddo, new_path)
+                    all_paths.extend(path_lists)
+                else:
+                    all_paths.append(new_path)
+
+        return all_paths
 
     def trace_dt_lifecycle(self, prefix_path: list):
         """

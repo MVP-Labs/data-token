@@ -192,3 +192,7 @@ print(job_service.check_remote_compute(ddo4.dt, ddo3.dt,
 found = tracer_service.trace_dt_lifecycle([ddo1.dt])
 tracer_service.tracer_print(found)
 
+
+print(tracer_service.get_marketplace_stat())
+print(asset_service.get_dt_marketplace())
+print(asset_service.get_dt_details(ddo4.dt))
