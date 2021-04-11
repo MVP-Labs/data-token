@@ -191,3 +191,4 @@ print(job_service.check_remote_compute(ddo4.dt, ddo3.dt,
 
 found = tracer_service.trace_dt_lifecycle([ddo1.dt])
 tracer_service.tracer_print(found)
+

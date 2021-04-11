@@ -26,21 +26,21 @@ class SystemService:
 
         self.config = config
 
-    def register_enterprize(self, address, name, desc, from_wallet):
+    def register_enterprise(self, address, name, desc, from_wallet):
         """
-        Register a new enterprize on-chain.
+        Register a new enterprise on-chain.
 
-        :param address: refers to the enterprize address
-        :param name: refers to the enterprize name
-        :param desc: refers to the enterprize description
+        :param address: refers to the enterprise address
+        :param name: refers to the enterprise name
+        :param desc: refers to the enterprise description
         :param from_wallet: the system account
         :return
         """
-        if not self.verifier.check_enterprize(address):
-            self.asset_provider.register_enterprize(
+        if not self.verifier.check_enterprise(address):
+            self.asset_provider.register_enterprise(
                 address, name, desc, from_wallet)
         else:
-            self.asset_provider.update_enterprize(
+            self.asset_provider.update_enterprise(
                 address, name, desc, from_wallet)
 
         return
@@ -93,3 +93,4 @@ class SystemService:
                 tid, name, checksum, ipfs_path, from_wallet)
 
         return op
+

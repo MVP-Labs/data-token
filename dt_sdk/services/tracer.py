@@ -28,9 +28,9 @@ class TracerService(object):
 
         self.config = config
 
-    def get_enterprize(self, id):
-        """Get the enterprize info."""
-        return self.asset_provider.get_enterprize(id)
+    def get_enterprise(self, id):
+        """Get the enterprise info."""
+        return self.asset_provider.get_enterprise(id)
 
     def get_task(self, task_id):
         """Get task info."""
@@ -124,7 +124,7 @@ class TracerService(object):
 
             for id_bytes in path[1:-1]:
                 owner = self.get_dt_owner(id_bytes)
-                owner_info = self.get_enterprize(owner)
+                owner_info = self.get_enterprise(owner)
                 dt = DTHelper.id_bytes_to_dt(id_bytes)
 
                 text = dt + f' (aggregator: {owner_info[0]})'
@@ -139,7 +139,7 @@ class TracerService(object):
 
             for job in path[-1]:
                 job_id, _, task_id, demander, task_name, _ = job
-                demander_info = self.get_enterprize(demander)
+                demander_info = self.get_enterprise(demander)
                 text = f' (task_name: {task_name}, demander: {demander_info[0]}, task_id: {task_id}, job_id: {job_id})'
                 child_node = Node(text=text, level=level)
                 tmp_node.add_child(child_node)
@@ -205,3 +205,4 @@ class Node:
 
     def __str__(self):
         return self.text
+
