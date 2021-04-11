@@ -1,8 +1,8 @@
 # """Demo"""
 
-from dt_sdk.toolkit.wallet import Wallet
-from dt_sdk.models.keeper import Keeper
-from dt_sdk.models.constants import Role, Operation
+from datatoken.model.web3_toolkit.wallet import Wallet
+from datatoken.model.keeper import Keeper
+from datatoken.model.constants import Role, Operation
 
 
 keeper = Keeper()
@@ -19,12 +19,12 @@ user2 = Wallet(
 #####
 print('add role')
 if not keeper.role_controller.check_role(
-        org1.atp_address, Role.ROLE_ENTERPRIZE):
+        org1.atp_address, Role.ROLE_ENTERPRISE):
     keeper.role_controller.add_role(
-        org1.atp_address, Role.ROLE_ENTERPRIZE, system)
+        org1.atp_address, Role.ROLE_ENTERPRISE, system)
 
 print(keeper.role_controller.check_role(
-    org1.atp_address, Role.ROLE_ENTERPRIZE))
+    org1.atp_address, Role.ROLE_ENTERPRISE))
 
 print(keeper.role_controller.check_permission(
     org1.atp_address, Operation.MODIFY_ASSET))
@@ -40,17 +40,17 @@ print(keeper.role_controller.check_permission(
     user1.atp_address, Operation.MODIFY_AUTHORIZE))
 
 #####
-print('register enterprize')
-if not keeper.asset_provider.check_enterprize(org1.atp_address):
-    keeper.asset_provider.register_enterprize(
+print('register enterprise')
+if not keeper.asset_provider.check_enterprise(org1.atp_address):
+    keeper.asset_provider.register_enterprise(
         org1.atp_address, 'org1', 'test_org1', system)
 
-print(keeper.asset_provider.check_enterprize(org1.atp_address))
-print(keeper.asset_provider.get_enterprize(org1.atp_address))
+print(keeper.asset_provider.check_enterprise(org1.atp_address))
+print(keeper.asset_provider.get_enterprise(org1.atp_address))
 
-keeper.asset_provider.update_enterprize(
+keeper.asset_provider.update_enterprise(
     org1.atp_address, 'org1', 'test_org1_update', system)
-print(keeper.asset_provider.get_enterprize(org1.atp_address))
+print(keeper.asset_provider.get_enterprise(org1.atp_address))
 
 #####
 print('add provider')
@@ -145,7 +145,7 @@ print('marketplace info')
 print(keeper.dt_factory.get_dt_num())
 print(keeper.op_template.get_template_num())
 print(keeper.task_market.get_job_num())
-print(keeper.task_market.get_task_num()())
+print(keeper.task_market.get_task_num())
 
 dt_idx, owners, issuers, checksums, isLeafs, ipfsPaths, _ = keeper.dt_factory.get_available_dts()
 print(dt_idx)
@@ -155,4 +155,3 @@ print(keeper.asset_provider.get_issuer_names(issuers))
 #####
 print()
 print('successfully finished')
-

@@ -1,12 +1,12 @@
 # """Demo"""
 
-from dt_sdk.config import Config
-from dt_sdk.toolkit.wallet import Wallet
-from dt_sdk.toolkit.utils import hash_and_sign
-from dt_sdk.services.system import SystemService
-from dt_sdk.services.asset import AssetService
-from dt_sdk.services.job import JobService
-from dt_sdk.services.tracer import TracerService
+from datatoken.config import Config
+from datatoken.model.web3_toolkit.wallet import Wallet
+from datatoken.model.web3_toolkit.utils import hash_and_sign
+from datatoken.service.system import SystemService
+from datatoken.service.asset import AssetService
+from datatoken.service.job import JobService
+from datatoken.service.tracer import TracerService
 
 config = Config(filename='./config.ini')
 
@@ -30,20 +30,21 @@ job_service = JobService(config)
 tracer_service = TracerService(config)
 
 ############
-system_service.register_enterprize(
+system_service.register_enterprise(
     org1_account.atp_address, 'org1', 'test_org1', system_account)
 system_service.add_provider(org1_account.atp_address, system_account)
 
-system_service.register_enterprize(
+system_service.register_enterprise(
     org2_account.atp_address, 'org2', 'test_org2', system_account)
 system_service.add_provider(org2_account.atp_address, system_account)
 
-system_service.register_enterprize(
+system_service.register_enterprise(
     org3_account.atp_address, 'org3', 'test_org3', system_account)
 system_service.add_provider(org3_account.atp_address, system_account)
 
 
-metadata = {'main': {'name': 'add_op', 'desc': 'test add op', 'type': 'Operation'}}
+metadata = {'main': {'name': 'add_op',
+                     'desc': 'test add op', 'type': 'Operation'}}
 with open('./tests/template/add_op.py', 'r') as f:
     operation = f.read()
 with open('./tests/template/args.json', 'r') as f:
