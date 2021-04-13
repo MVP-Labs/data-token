@@ -103,31 +103,44 @@ class TracerService(object):
 
         return all_paths
 
-    def trace_dt_lifecycle(self, prefix_path: list):
+    def trace_dt_lifecycle(self, prefix: list):
         """
-        Trace the whole lifecycle for a dt using dfs recursive search. Only when an 
+        Trace the whole lifecycle for a dt using dfs recursive search. Only when an
         algorithm cdt is submitted for solving tasks, the terminal state is reached.
 
-        :param prefix_path: fixed prefix path, then find its subsequent paths.
+        :param prefix: fixed prefix path, then find its subsequent paths.
         :return all_paths: a list of found prefix + subsequent paths
         """
-        dt = prefix_path[-1]
+        dt = prefix[-1]["dt"]
         grantees = self.trace_dt_grantees(dt)
 
         all_paths = []
 
         for cdt in grantees:
 
-            new_path = prefix_path.copy()
-            new_path.append(cdt)
+            new_path = prefix.copy()
+
+            owner = self.get_dt_owner(cdt)
+            owner_info = self.get_enterprise(owner)[0]
+
+            new_path.append(
+                {"dt": DTHelper.id_bytes_to_dt(cdt), "aggregator": owner_info})
 
             _, ddo = resolve_asset(cdt, self.dt_factory)
 
             if self.verifier.check_asset_type(ddo, self.TERMINAL):
                 jobs = self.trace_cdt_jobs(cdt)
+
                 if len(jobs):
-                    new_path.append(jobs)
-                    all_paths.append(new_path)
+                    for job in jobs:
+                        job_id, _, task_id, demander, task_name, _ = job
+                        demander_info = self.get_enterprise(demander)
+                        text = {"task_name": task_name, "demander": demander_info[0],
+                                "task_id": task_id, "job_id": job_id}
+
+                        new_path_tmp = new_path.copy()
+                        new_path_tmp.append(text)
+                        all_paths.append(new_path_tmp)
             else:
                 path_lists = self.trace_dt_lifecycle(new_path)
                 all_paths.extend(path_lists)
@@ -136,9 +149,9 @@ class TracerService(object):
 
     def tree_format(self, paths):
         """
-        Convert paths to a formated tree using Node class.
+        Convert paths to a formated hierarchical tree using Node class.
 
-        :param paths: a list of dt->...->dt->... authorization chains
+        :param paths: a list of dt->...->dt->... authorization chains, with the same root dt
         :return: root Node instance
         """
         if len(paths) == 0:
@@ -180,64 +193,7 @@ class TracerService(object):
 
         return data
 
-    def tracer_print(self, paths, detailed=True):
-        """
-        Output the hierarchical tree in which each leaf is a terminal job.
-
-        :param paths: a list of authorization chains, with the same root dt
-        :param detailed: output more information, e.g., aggregators/agreements/tasks
-        :return
-        """
-        if len(paths) == 0:
-            print('Do not find any asset sharing path')
-        else:
-            tree = self._tree_format(paths)
-            self._print_tree(tree, indent=[], final_node=True)
-
-    def _tree_format(self, paths):
-        """
-        Convert paths to a formated tree using Node class.
-
-        :param paths: a list of dt->...->dt->[job,...,job] authorization chains
-        :return: root Node instance
-        """
-        root = paths[0][0]
-
-        for path in paths:
-            if path[0] != root:
-                raise AssertionError(f'A tree can only contai one root')
-
-        root_node = Node(text=root, level=0)
-        for path in paths:
-            tmp_node = root_node
-            level = 1
-            index = 0
-
-            for id_bytes in path[1:-1]:
-                owner = self.get_dt_owner(id_bytes)
-                owner_info = self.get_enterprise(owner)
-                dt = DTHelper.id_bytes_to_dt(id_bytes)
-
-                text = dt + f' (aggregator: {owner_info[0]})'
-                child_node = tmp_node.get_child(text=text)
-                if not child_node:
-                    child_node = Node(text=text, level=level)
-                    tmp_node.add_child(child_node)
-
-                tmp_node = child_node
-                level += 1
-                index += 1
-
-            for job in path[-1]:
-                job_id, _, task_id, demander, task_name, _ = job
-                demander_info = self.get_enterprise(demander)
-                text = f' (task_name: {task_name}, demander: {demander_info[0]}, task_id: {task_id}, job_id: {job_id})'
-                child_node = Node(text=text, level=level)
-                tmp_node.add_child(child_node)
-
-        return root_node
-
-    def _print_tree(self, node, indent: list, final_node=True):
+    def print_tree(self, node, indent: list, final_node=True):
         """Recursively output the node text and its child node."""
         for i in range(node.level):
             print(indent[i], end='')
@@ -270,15 +226,15 @@ class Node:
         self._level = level     # current tree depth
         self._child_nodes = []  # its granted father dt
 
-    @property
+    @ property
     def text(self):
         return self._text
 
-    @property
+    @ property
     def level(self):
         return self._level
 
-    @property
+    @ property
     def child_nodes(self):
         return self._child_nodes
 

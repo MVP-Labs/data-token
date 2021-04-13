@@ -199,8 +199,7 @@ class AssetService(object):
         union_paths = self.tracer.trace_data_union(ddo, [ddo.dt])
         tree = self.tracer.tree_format(union_paths)
         union_data = self.tracer.tree_to_json(tree)
-
-        self.tracer._print_tree(tree, indent=[], final_node=True)
+        # self.tracer.print_tree(tree, indent=[], final_node=True)
 
         service_lists = []
         for service in ddo.services:

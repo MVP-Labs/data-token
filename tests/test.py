@@ -183,14 +183,16 @@ asset_service.activate_cdt(ddo4.dt, ddo4.child_dts, org3_account)
 
 task_id = job_service.create_task('test', 'test_task', org3_account)
 job_id = job_service.add_job(task_id, ddo4.dt, org3_account)
+job_id = job_service.add_job(task_id, ddo4.dt, org3_account)
 
 msg = f'{org3_account.atp_address}{job_id}'
 signature = hash_and_sign(msg, org3_account)
 print(job_service.check_remote_compute(ddo4.dt, ddo3.dt,
                                        job_id, org3_account.atp_address, signature))
 
-found = tracer_service.trace_dt_lifecycle([ddo1.dt])
-tracer_service.tracer_print(found)
+found = tracer_service.trace_dt_lifecycle([{"dt": ddo1.dt}])
+tree = tracer_service.tree_format(found)
+tracer_service.print_tree(tree, indent=[], final_node=True)
 
 
 print(tracer_service.get_marketplace_stat())
