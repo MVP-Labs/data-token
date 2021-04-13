@@ -159,8 +159,9 @@ class AssetService(object):
             ddo = resolve_asset_by_url(ipfs_path)
 
             if ddo and self.verifier.verify_ddo_integrity(ddo, checksum):
+                dt = DTHelper.id_bytes_to_dt(dt)
                 asset_name = ddo.metadata["main"].get("name")
-                asset_fig = "test"
+                asset_fig = ddo.metadata['main'].get('fig')
                 union_or_not = ddo.is_cdt
 
                 marketplace_list.append(
@@ -187,22 +188,24 @@ class AssetService(object):
         issuer = data[1]
         issuer_name = self.asset_provider.get_enterprise(issuer)[0]
 
-        asset_name = ddo.metadata["main"].get("name")
-        asset_desc = ddo.metadata["main"].get("desc")
-        asset_type = ddo.metadata["main"].get("type")
-        # asset_fig = ddo.metadata["main"].get("fig")
-        asset_fig = "test"
+        asset_name = ddo.metadata['main'].get('name')
+        asset_desc = ddo.metadata['main'].get('desc')
+        asset_type = ddo.metadata['main'].get('type')
+        asset_fig = ddo.metadata['main'].get('fig')
 
         dt_info = (asset_name, owner, issuer_name,
                    asset_desc, asset_type, asset_fig)
 
-        union_data = self.tracer.trace_data_union(ddo, [ddo.dt])
+        union_paths = self.tracer.trace_data_union(ddo, [ddo.dt])
+        tree = self.tracer.tree_format(union_paths)
+        union_data = self.tracer.tree_to_json(tree)
+
+        self.tracer._print_tree(tree, indent=[], final_node=True)
 
         service_lists = []
         for service in ddo.services:
             sid = service.index
-            # op_name = service.attributes['op_name']
-            op_name = "test"
+            op_name = service.attributes.get('op_name')
             price = service.attributes['price']
             constrains = service.descriptor
 

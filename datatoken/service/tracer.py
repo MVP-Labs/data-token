@@ -52,7 +52,9 @@ class TracerService(object):
         task_nums = self.task_market.get_task_num()
         job_nums = self.task_market.get_job_num()
 
-        return dt_nums, template_nums, task_nums, job_nums
+        stats = (dt_nums, template_nums, task_nums, job_nums)
+
+        return stats
 
     def trace_owner_assets(self, address):
         """Get all assets for a given owner."""
@@ -80,14 +82,23 @@ class TracerService(object):
         if ddo.is_cdt:
             for child_dt in ddo.child_dts:
                 new_path = prefix.copy()
-                new_path.append(child_dt)
 
                 _, child_ddo = resolve_asset(child_dt, self.dt_factory)
 
+                asset_name = child_ddo.metadata["main"].get("name")
+
                 if child_ddo.is_cdt:
+                    owner = self.get_dt_owner(child_ddo.dt)
+                    owner_info = self.get_enterprise(owner)[0]
+
+                    new_path.append(
+                        {"dt": child_dt, "name": asset_name, "aggregator": owner_info})
                     path_lists = self.trace_data_union(child_ddo, new_path)
                     all_paths.extend(path_lists)
                 else:
+                    asset_type = child_ddo.metadata['main'].get('type')
+                    new_path.append(
+                        {"dt": child_dt, "name": asset_name, "type": asset_type})
                     all_paths.append(new_path)
 
         return all_paths
@@ -123,6 +134,52 @@ class TracerService(object):
 
         return all_paths
 
+    def tree_format(self, paths):
+        """
+        Convert paths to a formated tree using Node class.
+
+        :param paths: a list of dt->...->dt->... authorization chains
+        :return: root Node instance
+        """
+        if len(paths) == 0:
+            print('Do not find any data linking path')
+
+        root = paths[0][0]
+
+        for path in paths:
+            if path[0] != root:
+                raise AssertionError(f'A tree can only contain one root')
+
+        root_node = Node(text=root, level=0)
+        for path in paths:
+            tmp_node = root_node
+            level = 1
+            index = 0
+
+            for path_value in path[1:]:
+                child_node = tmp_node.get_child(text=path_value)
+                if not child_node:
+                    child_node = Node(text=path_value, level=level)
+                    tmp_node.add_child(child_node)
+
+                tmp_node = child_node
+                level += 1
+                index += 1
+
+        return root_node
+
+    def tree_to_json(self, node):
+
+        data = {"values": node.text}
+
+        if len(node.child_nodes):
+            data["children"] = []
+
+        for n in node.child_nodes:
+            data["children"].append(self.tree_to_json(n))
+
+        return data
+
     def tracer_print(self, paths, detailed=True):
         """
         Output the hierarchical tree in which each leaf is a terminal job.
@@ -134,10 +191,10 @@ class TracerService(object):
         if len(paths) == 0:
             print('Do not find any asset sharing path')
         else:
-            tree = self.tree_format(paths)
+            tree = self._tree_format(paths)
             self._print_tree(tree, indent=[], final_node=True)
 
-    def tree_format(self, paths):
+    def _tree_format(self, paths):
         """
         Convert paths to a formated tree using Node class.
 
