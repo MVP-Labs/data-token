@@ -47,6 +47,9 @@ def validate_service_agreement(cdt_ddo, required_ddo):
     is_cdt = required_ddo.is_cdt
     terminal = (cdt_ddo.asset_type == 'Algorithm')
 
+    if required_ddo.asset_type == 'Algorithm':
+        return False
+
     for service in cdt_ddo.services:
         fulfilled = service.descriptor['workflow'].get(required_ddo.dt)
 

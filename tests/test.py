@@ -239,7 +239,7 @@ print(job_service.check_remote_compute(ddo4.dt, ddo3.dt,
 
 job_id = job_service.add_job(task_id, ddo5.dt, org3_account)
 
-found = tracer_service.trace_dt_lifecycle([{"dt": ddo1.dt}])
+found = tracer_service.trace_dt_lifecycle(dt, prefix=[])
 job_list = tracer_service.job_list_format(found)
 print(job_list)
 tree = tracer_service.tree_format(found)

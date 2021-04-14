@@ -103,7 +103,7 @@ class TracerService(object):
 
         return all_paths
 
-    def trace_dt_lifecycle(self, prefix: list):
+    def trace_dt_lifecycle(self, dt, prefix: list):
         """
         Trace the whole lifecycle for a dt using dfs recursive search. Only when an
         algorithm cdt is submitted for solving tasks, the terminal state is reached.
@@ -111,41 +111,45 @@ class TracerService(object):
         :param prefix: fixed prefix path, then find its subsequent paths.
         :return all_paths: a list of found prefix + subsequent paths
         """
-        dt = prefix[-1]["dt"]
-        grantees = self.trace_dt_grantees(dt)
+
+        prefix = prefix.copy()
+        if len(prefix):
+            owner = self.get_dt_owner(dt)
+            owner_info = self.get_enterprise(owner)[0]
+            prefix.append({"dt": DTHelper.id_bytes_to_dt(
+                dt), "aggregator": owner_info, "aggrement": 0})
+        else:
+            prefix.append({"dt": dt})
+            dt = DTHelper.dt_to_id_bytes(dt)
+
+        _, ddo = resolve_asset(dt, self.dt_factory)
 
         all_paths = []
 
+        if self.verifier.check_asset_type(ddo, self.TERMINAL):
+            jobs = self.trace_cdt_jobs(dt)
+
+            if len(jobs):
+                for job in jobs:
+                    job_id, solver, task_id, demander, task_name, task_desc = job
+                    demander_info = self.get_enterprise(demander)[0]
+                    solver_info = self.get_enterprise(solver)[0]
+
+                    text = {"task_name": task_name, "task_desc": task_desc, "solver": solver_info,
+                            "demander": demander_info, "task_id": task_id, "job_id": job_id}
+
+                    new_path = prefix.copy()
+                    new_path.append(text)
+                    all_paths.append(new_path)
+
+            return all_paths
+
+        grantees = self.trace_dt_grantees(dt)
+
         for cdt in grantees:
 
-            new_path = prefix.copy()
-
-            owner = self.get_dt_owner(cdt)
-            owner_info = self.get_enterprise(owner)[0]
-
-            new_path.append(
-                {"dt": DTHelper.id_bytes_to_dt(cdt), "aggregator": owner_info, "aggrement": 0})
-
-            _, ddo = resolve_asset(cdt, self.dt_factory)
-
-            if self.verifier.check_asset_type(ddo, self.TERMINAL):
-                jobs = self.trace_cdt_jobs(cdt)
-
-                if len(jobs):
-                    for job in jobs:
-                        job_id, solver, task_id, demander, task_name, task_desc = job
-                        demander_info = self.get_enterprise(demander)[0]
-                        solver_info = self.get_enterprise(solver)[0]
-
-                        text = {"task_name": task_name, "task_desc": task_desc, "solver": solver_info,
-                                "demander": demander_info, "task_id": task_id, "job_id": job_id}
-
-                        new_path_tmp = new_path.copy()
-                        new_path_tmp.append(text)
-                        all_paths.append(new_path_tmp)
-            else:
-                path_lists = self.trace_dt_lifecycle(new_path)
-                all_paths.extend(path_lists)
+            path_lists = self.trace_dt_lifecycle(cdt, prefix)
+            all_paths.extend(path_lists)
 
         return all_paths
 
