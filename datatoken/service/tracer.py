@@ -124,7 +124,7 @@ class TracerService(object):
             owner_info = self.get_enterprise(owner)[0]
 
             new_path.append(
-                {"dt": DTHelper.id_bytes_to_dt(cdt), "aggregator": owner_info})
+                {"dt": DTHelper.id_bytes_to_dt(cdt), "aggregator": owner_info, "aggrement": 0})
 
             _, ddo = resolve_asset(cdt, self.dt_factory)
 
@@ -133,10 +133,12 @@ class TracerService(object):
 
                 if len(jobs):
                     for job in jobs:
-                        job_id, _, task_id, demander, task_name, _ = job
-                        demander_info = self.get_enterprise(demander)
-                        text = {"task_name": task_name, "demander": demander_info[0],
-                                "task_id": task_id, "job_id": job_id}
+                        job_id, solver, task_id, demander, task_name, task_desc = job
+                        demander_info = self.get_enterprise(demander)[0]
+                        solver_info = self.get_enterprise(solver)[0]
+
+                        text = {"task_name": task_name, "task_desc": task_desc, "solver": solver_info,
+                                "demander": demander_info, "task_id": task_id, "job_id": job_id}
 
                         new_path_tmp = new_path.copy()
                         new_path_tmp.append(text)
@@ -147,6 +149,28 @@ class TracerService(object):
 
         return all_paths
 
+    def job_list_format(self, paths):
+        """
+        Convert paths to a formated job list table.
+
+        :param paths: a list of dt->...->dt-> [job, ..., job] authorization chains, with the same root dt
+        :return: list
+        """
+        if len(paths) == 0:
+            print('Do not find any data linking path')
+            return None
+
+        job_list = []
+        root = paths[0][0]
+
+        for path in paths:
+            if path[0] != root:
+                raise AssertionError(f'A tree can only contain one root')
+
+            job_list.append(path[-1])
+
+        return job_list
+
     def tree_format(self, paths):
         """
         Convert paths to a formated hierarchical tree using Node class.
@@ -156,6 +180,7 @@ class TracerService(object):
         """
         if len(paths) == 0:
             print('Do not find any data linking path')
+            return None
 
         root = paths[0][0]
 

@@ -165,7 +165,8 @@ class AssetService(object):
                 union_or_not = ddo.is_cdt
 
                 marketplace_list.append(
-                    (dt, issuer_name, asset_name, asset_fig, union_or_not))
+                    {"dt": dt, "issuer": issuer_name, "name": asset_name,
+                     "fig": asset_fig, "union_or_not": union_or_not})
 
         return marketplace_list
 
@@ -193,9 +194,9 @@ class AssetService(object):
         asset_type = ddo.metadata['main'].get('type')
         asset_fig = ddo.metadata['main'].get('fig')
 
-        dt_info = (asset_name, owner, issuer_name,
-                   asset_desc, asset_type, asset_fig)
-        
+        dt_info = {"name": asset_name, "owner": owner, "issuer": issuer_name,
+                   "desc": asset_desc, "type": asset_type, "fig": asset_fig}
+
         union_data = None
         if ddo.is_cdt:
             union_paths = self.tracer.trace_data_union(ddo, [ddo.dt])
@@ -210,6 +211,7 @@ class AssetService(object):
             price = service.attributes['price']
             constrains = service.descriptor
 
-            service_lists.append((sid, op_name, price, constrains))
+            service_lists.append(
+                {"sid": sid, "op": op_name, "price": price, "constrains": constrains})
 
         return (dt_info, service_lists, union_data)
