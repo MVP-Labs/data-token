@@ -195,10 +195,12 @@ class AssetService(object):
 
         dt_info = (asset_name, owner, issuer_name,
                    asset_desc, asset_type, asset_fig)
-
-        union_paths = self.tracer.trace_data_union(ddo, [ddo.dt])
-        tree = self.tracer.tree_format(union_paths)
-        union_data = self.tracer.tree_to_json(tree)
+        
+        union_data = None
+        if ddo.is_cdt:
+            union_paths = self.tracer.trace_data_union(ddo, [ddo.dt])
+            tree = self.tracer.tree_format(union_paths)
+            union_data = self.tracer.tree_to_json(tree)
         # self.tracer.print_tree(tree, indent=[], final_node=True)
 
         service_lists = []

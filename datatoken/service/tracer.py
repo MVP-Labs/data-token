@@ -213,7 +213,7 @@ class TracerService(object):
                 c = '    ' if final_node else '│   '
                 indent.append(c)
                 last_node = i == cnt - 1
-                self._print_tree(n, indent, last_node)
+                self.print_tree(n, indent, last_node)
                 del indent[-1]
 
 

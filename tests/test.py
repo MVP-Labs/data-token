@@ -54,7 +54,7 @@ op1 = system_service.publish_template(
     metadata, operation, params, system_account)
 
 ############
-metadata = {'main': {'name': 'dataset1', 'type': 'Dataset'}}
+metadata = {'main': {'name': 'leaf data1', 'desc': 'test leaf1', 'type': 'Dataset'}}
 service = {
     'index': 'sid0_for_dt1',
     'endpoint': 'ip:port',
@@ -74,7 +74,7 @@ ddo1 = asset_service.generate_ddo(
     metadata, [service], org1_account.atp_address, verify=True)
 asset_service.publish_dt(ddo1, org1_account)
 
-metadata = {'main': {'type': 'Dataset', 'name': 'dataset2'}}
+metadata = {'main': {'name': 'leaf data2', 'desc': 'test leaf2', 'type': 'Dataset'}}
 service = {
     'index': 'sid0_for_dt2',
     'endpoint': 'ip:port',
@@ -94,7 +94,7 @@ ddo2 = asset_service.generate_ddo(
     metadata, [service], org2_account.atp_address, verify=True)
 asset_service.publish_dt(ddo2, org2_account)
 
-metadata = {'main': {'type': 'Dataset', 'name': 'data union'}}
+metadata = {'main': {'type': 'Dataset', 'desc': 'test union1', 'name': 'data union1'}}
 child_dts = [
     ddo1.dt,
     ddo2.dt
@@ -140,7 +140,7 @@ asset_service.grant_dt_perm(ddo1.dt, ddo3.dt, org1_account)
 asset_service.grant_dt_perm(ddo2.dt, ddo3.dt, org2_account)
 asset_service.activate_cdt(ddo3.dt, ddo3.child_dts, org3_account)
 
-metadata = {'main': {'type': 'Algorithm', 'name': 'algorithm1'}}
+metadata = {'main': {'type': 'Algorithm', 'name': 'algorithm1', 'desc': 'test algo1'}}
 child_dts = [
     ddo3.dt,
 ]
@@ -181,6 +181,48 @@ print(asset_service.check_service_terms(
 asset_service.grant_dt_perm(ddo3.dt, ddo4.dt, org3_account)
 asset_service.activate_cdt(ddo4.dt, ddo4.child_dts, org3_account)
 
+metadata = {'main': {'type': 'Algorithm', 'name': 'algorithm2', 'desc': 'test algo2'}}
+child_dts = [
+    ddo3.dt,
+]
+service1 = {
+    'index': 'sid0_for_cdt3',
+    'endpoint': 'ip:port',
+    'descriptor': {
+        'workflow': {
+            ddo3.dt: {
+                'service': 'sid0_for_cdt1',
+                'constraint': {
+                    ddo1.dt: {
+                        'arg1': 1,
+                        'arg2': 3,
+                    },
+                    ddo2.dt: {
+                        'arg1': 4,
+                        'arg2': 2
+                    }
+                }
+            }
+        }
+    },
+    'attributes': {
+        'price': 30
+    }
+}
+
+ddo5 = asset_service.generate_ddo(
+    metadata, [service1], org3_account.atp_address, child_dts=child_dts, verify=True)
+asset_service.publish_dt(ddo5, org3_account)
+
+msg = f'{org3_account.atp_address}{ddo5.dt}'
+signature = hash_and_sign(msg, org3_account)
+print(asset_service.check_service_terms(
+    ddo5.dt, ddo3.dt, org3_account.atp_address, signature))
+
+asset_service.grant_dt_perm(ddo3.dt, ddo5.dt, org3_account)
+asset_service.activate_cdt(ddo5.dt, ddo5.child_dts, org3_account)
+
+
 task_id = job_service.create_task('test', 'test_task', org3_account)
 job_id = job_service.add_job(task_id, ddo4.dt, org3_account)
 job_id = job_service.add_job(task_id, ddo4.dt, org3_account)
@@ -189,6 +231,8 @@ msg = f'{org3_account.atp_address}{job_id}'
 signature = hash_and_sign(msg, org3_account)
 print(job_service.check_remote_compute(ddo4.dt, ddo3.dt,
                                        job_id, org3_account.atp_address, signature))
+
+job_id = job_service.add_job(task_id, ddo5.dt, org3_account)
 
 found = tracer_service.trace_dt_lifecycle([{"dt": ddo1.dt}])
 tree = tracer_service.tree_format(found)
