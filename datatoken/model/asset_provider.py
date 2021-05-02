@@ -4,7 +4,7 @@
 
 import logging
 
-from datatoken.model.web3_toolkit.contract_base import ContractBase
+from datatoken.web3.contract_base import ContractBase
 from datatoken.model.constants import ErrorCode
 
 logger = logging.getLogger(__name__)

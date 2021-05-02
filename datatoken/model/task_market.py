@@ -4,8 +4,8 @@
 
 import logging
 
-from datatoken.model.web3_toolkit.contract_base import ContractBase
-from datatoken.model.web3_toolkit.event_filter import EventFilter
+from datatoken.web3.contract_base import ContractBase
+from datatoken.web3.event_filter import EventFilter
 from datatoken.model.constants import ErrorCode
 
 logger = logging.getLogger(__name__)

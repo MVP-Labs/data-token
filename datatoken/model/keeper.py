@@ -7,8 +7,8 @@ import logging
 from os import getenv
 from configparser import ConfigParser
 
-from datatoken.model.web3_toolkit.contract_handler import ContractHandler
-from datatoken.model.web3_toolkit.web3_provider import Web3Provider
+from datatoken.web3.contract_handler import ContractHandler
+from datatoken.web3.web3_provider import Web3Provider
 from datatoken.model.role_controller import RoleController
 from datatoken.model.asset_provider import AssetProvider
 from datatoken.model.op_template import OpTemplate

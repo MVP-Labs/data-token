@@ -2,10 +2,10 @@
 # Copyright 2021 The dt-asset Authors
 # SPDX-License-Identifier: LGPL-2.1-only
 
-from datatoken.asset.ddo import DDO
-from datatoken.asset.dt_helper import DTHelper
-from datatoken.asset.operator import OpTemplate
-from datatoken.asset.storage.ipfs_provider import IPFSProvider
+from datatoken.core.ddo import DDO
+from datatoken.core.dt_helper import DTHelper
+from datatoken.core.operator import OpTemplate
+from datatoken.store.ipfs_provider import IPFSProvider
 
 
 def resolve_asset(dt, keeper_dt_factory):

@@ -13,12 +13,12 @@ from websockets import ConnectionClosed
 from alaya import Web3
 from alaya.utils.threads import Timeout
 
-from datatoken.model.web3_toolkit.constants import ENV_GAS_PRICE
-from datatoken.model.web3_toolkit.contract_handler import ContractHandler
-from datatoken.model.web3_toolkit.wallet import Wallet
-from datatoken.model.web3_toolkit.event_listener import EventListener
-from datatoken.model.web3_toolkit.web3_provider import Web3Provider
-from datatoken.model.web3_toolkit.web3_overrides.contract import CustomContractFunction
+from datatoken.web3.constants import ENV_GAS_PRICE
+from datatoken.web3.contract_handler import ContractHandler
+from datatoken.web3.wallet import Wallet
+from datatoken.web3.event_listener import EventListener
+from datatoken.web3.web3_provider import Web3Provider
+from datatoken.web3.web3_overrides.contract import CustomContractFunction
 
 logger = logging.getLogger(__name__)
 

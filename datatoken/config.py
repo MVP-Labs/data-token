@@ -7,7 +7,7 @@ import logging
 from os import getenv
 from pathlib import Path
 from configparser import ConfigParser
-from datatoken.model.web3_toolkit.web3_provider import Web3Provider
+from datatoken.web3.web3_provider import Web3Provider
 
 NAME_ARTIFACTS_PATH = 'artifacts_path'
 NAME_ADDRESS_FILE = 'address_file'

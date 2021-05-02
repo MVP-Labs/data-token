@@ -4,8 +4,8 @@
 
 import logging
 
-from datatoken.asset.dt_helper import DTHelper
-from datatoken.asset.storage.asset_resolve import resolve_asset, resolve_op
+from datatoken.core.dt_helper import DTHelper
+from datatoken.store.asset_resolve import resolve_asset, resolve_op
 from datatoken.model.keeper import Keeper
 from datatoken.service.verifier import VerifierService
 

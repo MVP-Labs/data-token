@@ -4,9 +4,9 @@
 
 import logging
 
-from datatoken.asset.dt_helper import DTHelper
-from datatoken.asset.storage.ipfs_provider import IPFSProvider
-from datatoken.asset.storage.asset_resolve import resolve_asset, resolve_op
+from datatoken.core.dt_helper import DTHelper
+from datatoken.store.ipfs_provider import IPFSProvider
+from datatoken.store.asset_resolve import resolve_asset, resolve_op
 from datatoken.model.keeper import Keeper
 from datatoken.service.verifier import VerifierService
 
@@ -108,6 +108,7 @@ class TracerService(object):
         Trace the whole lifecycle for a dt using dfs recursive search. Only when an
         algorithm cdt is submitted for solving tasks, the terminal state is reached.
 
+        :param dt: data token identifier.
         :param prefix: fixed prefix path, then find its subsequent paths.
         :return all_paths: a list of found prefix + subsequent paths
         """

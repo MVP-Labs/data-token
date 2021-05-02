@@ -1,6 +1,6 @@
 # """Demo"""
 
-from datatoken.model.web3_toolkit.wallet import Wallet
+from datatoken.web3.wallet import Wallet
 from datatoken.model.keeper import Keeper
 from datatoken.model.constants import Role, Operation
 

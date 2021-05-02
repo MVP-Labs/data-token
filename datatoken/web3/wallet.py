@@ -6,8 +6,8 @@ import logging
 import os
 import typing
 
-from datatoken.model.web3_toolkit.constants import MIN_GAS_PRICE, ENV_MAX_GAS_PRICE
-from datatoken.model.web3_toolkit.utils import privateKeyToAddress, privateKeyToPublicKey
+from datatoken.web3.constants import MIN_GAS_PRICE, ENV_MAX_GAS_PRICE
+from datatoken.web3.utils import privateKeyToAddress, privateKeyToPublicKey
 
 from alaya.packages.platon_keys.utils import bech32
 from alaya.packages.eth_utils import to_checksum_address

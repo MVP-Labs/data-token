@@ -17,8 +17,8 @@ from alaya.packages import platon_account as eth_account
 from alaya import Web3
 from alaya.contract import ContractEvent
 
-from datatoken.model.web3_toolkit.web3_provider import Web3Provider
-from datatoken.model.web3_toolkit.web3_overrides.signature import SignatureFix
+from datatoken.web3.web3_provider import Web3Provider
+from datatoken.web3.web3_overrides.signature import SignatureFix
 
 Signature = namedtuple('Signature', ('v', 'r', 's'))
 

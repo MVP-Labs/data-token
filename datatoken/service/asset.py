@@ -4,10 +4,10 @@
 
 import logging
 
-from datatoken.asset.ddo import DDO
-from datatoken.asset.dt_helper import DTHelper
-from datatoken.asset.storage.ipfs_provider import IPFSProvider
-from datatoken.asset.storage.asset_resolve import resolve_asset, resolve_asset_by_url
+from datatoken.core.ddo import DDO
+from datatoken.core.dt_helper import DTHelper
+from datatoken.store.ipfs_provider import IPFSProvider
+from datatoken.store.asset_resolve import resolve_asset, resolve_asset_by_url
 from datatoken.model.keeper import Keeper
 from datatoken.service.verifier import VerifierService
 from datatoken.service.tracer import TracerService
@@ -158,15 +158,16 @@ class AssetService(object):
         for dt, issuer_name, ipfs_path, checksum in zip(dt_idx, issuer_names, ipfs_paths, checksums):
             ddo = resolve_asset_by_url(ipfs_path)
 
-            if ddo and self.verifier.verify_ddo_integrity(ddo, checksum):
-                dt = DTHelper.id_bytes_to_dt(dt)
-                asset_name = ddo.metadata["main"].get("name")
-                asset_fig = ddo.metadata['main'].get('fig')
-                union_or_not = ddo.is_cdt
+            if ddo and ddo.metadata['main'].get('type') != "Algorithm":
+                if self.verifier.verify_ddo_integrity(ddo, checksum):
+                    dt = DTHelper.id_bytes_to_dt(dt)
+                    asset_name = ddo.metadata["main"].get("name")
+                    asset_fig = ddo.metadata['main'].get('fig')
+                    union_or_not = ddo.is_cdt
 
-                marketplace_list.append(
-                    {"dt": dt, "issuer": issuer_name, "name": asset_name,
-                     "fig": asset_fig, "union_or_not": union_or_not})
+                    marketplace_list.append(
+                        {"dt": dt, "issuer": issuer_name, "name": asset_name,
+                         "fig": asset_fig, "union_or_not": union_or_not})
 
         return marketplace_list
 

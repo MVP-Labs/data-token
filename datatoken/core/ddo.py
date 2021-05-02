@@ -5,10 +5,10 @@
 import copy
 import json
 
-from datatoken.asset.dt_helper import PREFIX
-from datatoken.asset.metadata import Metadata
-from datatoken.asset.service import Service
-from datatoken.asset.utils import get_timestamp, calc_checksum
+from datatoken.core.dt_helper import PREFIX
+from datatoken.core.metadata import Metadata
+from datatoken.core.service import Service
+from datatoken.core.utils import get_timestamp, calc_checksum
 
 
 class DDO:

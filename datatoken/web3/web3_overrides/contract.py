@@ -7,7 +7,7 @@ import time
 
 from alaya.contract import prepare_transaction
 
-from datatoken.model.web3_toolkit.wallet import Wallet
+from datatoken.web3.wallet import Wallet
 
 
 class CustomContractFunction:

@@ -1,8 +1,8 @@
 # """Demo"""
 
 from datatoken.config import Config
-from datatoken.model.web3_toolkit.wallet import Wallet
-from datatoken.model.web3_toolkit.utils import hash_and_sign
+from datatoken.web3.wallet import Wallet
+from datatoken.web3.utils import hash_and_sign
 from datatoken.service.system import SystemService
 from datatoken.service.asset import AssetService
 from datatoken.service.job import JobService
@@ -124,12 +124,40 @@ service = {
         }
     },
     'attributes': {
-        'price': 20
+        'price': 20,
+        'op_name': "federated"
+    }
+}
+
+service1 = {
+    'index': 'sid1_for_cdt2',
+    'endpoint': 'ip:port',
+    'descriptor': {
+        'workflow': {
+            ddo1.dt: {
+                'service': 'sid0_for_dt1',
+                'constraint': {
+                    'arg1': 1,
+                    'arg2': 3
+                }
+            },
+            ddo2.dt: {
+                'service': 'sid0_for_dt2',
+                'constraint': {
+                    'arg1': 2,
+                    'arg2': 2
+                }
+            }
+        }
+    },
+    'attributes': {
+        'price': 30,
+        'op_name': "download"
     }
 }
 
 ddo3 = asset_service.generate_ddo(
-    metadata, [service], org3_account.atp_address, child_dts=child_dts, verify=True)
+    metadata, [service, service1], org3_account.atp_address, child_dts=child_dts, verify=True)
 asset_service.publish_dt(ddo3, org3_account)
 
 msg = f'{org3_account.atp_address}{ddo3.dt}'
@@ -239,7 +267,7 @@ print(job_service.check_remote_compute(ddo4.dt, ddo3.dt,
 
 job_id = job_service.add_job(task_id, ddo5.dt, org3_account)
 
-found = tracer_service.trace_dt_lifecycle(dt, prefix=[])
+found = tracer_service.trace_dt_lifecycle(ddo1.dt, prefix=[])
 job_list = tracer_service.job_list_format(found)
 print(job_list)
 tree = tracer_service.tree_format(found)

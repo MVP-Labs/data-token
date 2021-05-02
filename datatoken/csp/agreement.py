@@ -4,7 +4,7 @@
 
 import json
 
-from datatoken.asset.storage.asset_resolve import resolve_op
+from datatoken.store.asset_resolve import resolve_op
 
 
 def validate_leaf_template(leaf_ddo, keeper_op_template):

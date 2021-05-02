@@ -4,7 +4,7 @@
 
 from alaya import Web3
 
-from datatoken.model.web3_toolkit.web3_overrides.http_provider import CustomHTTPProvider
+from datatoken.web3.web3_overrides.http_provider import CustomHTTPProvider
 
 
 class Web3Provider(object):

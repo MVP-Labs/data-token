@@ -7,8 +7,8 @@ import time
 from datetime import datetime
 from threading import Thread
 
-from datatoken.model.web3_toolkit.contract_handler import ContractHandler
-from datatoken.model.web3_toolkit.event_filter import EventFilter
+from datatoken.web3.contract_handler import ContractHandler
+from datatoken.web3.event_filter import EventFilter
 
 logger = logging.getLogger(__name__)
 

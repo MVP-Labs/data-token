@@ -5,13 +5,13 @@
 import logging
 
 from eth_utils import remove_0x_prefix
-from datatoken.asset.dt_helper import DTHelper
-from datatoken.asset.storage.asset_resolve import resolve_asset, resolve_op
-from datatoken.asset.utils import convert_to_string
-from datatoken.asset.agreement.constraint import validate_leaf_template, validate_service_agreement
+from datatoken.core.dt_helper import DTHelper
+from datatoken.core.utils import convert_to_string
+from datatoken.store.asset_resolve import resolve_asset, resolve_op
+from datatoken.csp.agreement import validate_leaf_template, validate_service_agreement
 from datatoken.model.keeper import Keeper
 from datatoken.model.constants import Role
-from datatoken.model.web3_toolkit.utils import personal_ec_recover
+from datatoken.web3.utils import personal_ec_recover
 
 logger = logging.getLogger(__name__)
 

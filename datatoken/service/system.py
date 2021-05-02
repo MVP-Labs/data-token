@@ -4,9 +4,9 @@
 
 import logging
 
-from datatoken.asset.operator import OpTemplate
-from datatoken.asset.dt_helper import DTHelper
-from datatoken.asset.storage.ipfs_provider import IPFSProvider
+from datatoken.core.operator import OpTemplate
+from datatoken.core.dt_helper import DTHelper
+from datatoken.store.ipfs_provider import IPFSProvider
 from datatoken.model.keeper import Keeper
 from datatoken.model.constants import Role
 from datatoken.service.verifier import VerifierService

@@ -5,7 +5,7 @@
 import logging
 import time
 
-from datatoken.model.web3_toolkit.web3_provider import Web3Provider
+from datatoken.web3.web3_provider import Web3Provider
 
 logger = logging.getLogger(__name__)
 
