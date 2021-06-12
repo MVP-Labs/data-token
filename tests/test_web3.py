@@ -8,13 +8,13 @@ from datatoken.model.constants import Role, Operation
 keeper = Keeper()
 
 system = Wallet(
-    keeper.web3, private_key='0x1e771da3a1dcae0fd77a942cc816fd6b9b4cca97220f8ea6c6782a848714129d')
+    keeper.web3, private_key='0xd5b87119980bc80944760f1027d7643dc9bdfff8307cae1e831ff7f74f11ebd3')
 org1 = Wallet(
-    keeper.web3, private_key='0x65e5b356ab8369c2971d584ade019c84d898f9b5d77d35940813c24a804d3b43')
+    keeper.web3, private_key='0xaca737275831497429a47bcd5766950a69a0fa8a1511a8cf656005de1c11546e')
 user1 = Wallet(
-    keeper.web3, private_key='0x243ba7d269e52c5861aca39cfa21cc94c75d43ad4189d666c06bae590a3a5317')
+    keeper.web3, private_key='0xc68daf21bb748605396992aaf95a28eba74b5ec53706ce251e35957baccf7e80')
 user2 = Wallet(
-    keeper.web3, private_key='0xc679156774b1ea1ce27e00ea82efd3a1c5ad48d314abae0d1226452546679422')
+    keeper.web3, private_key='0x858dc470755f747d50053b2e8e3bfca78d5fd9f75ef5a63398d4e8390792e026')
 
 #####
 print('add role')
