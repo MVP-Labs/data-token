@@ -40,7 +40,7 @@ The definition of data unions and trusted workflow service specification can be 
 
 ### play with it
 
-You first need to deploy dt-contracts to the Alaya private chain, refer to [Deployment Tutorial](https://github.com/ownership-labs/dt-contracts). Then set up the config.ini in the DataToken directory (e.g., artifacts_path and address_file), and modify the accounts in the test files, e.g., using the four private keys provided by ganache-cli.
+You first need to deploy dt-contracts, refer to [Deployment Tutorial](https://github.com/ownership-labs/dt-contracts). Then set up the config.ini in the DataToken directory (e.g., artifacts_path and address_file), and modify the accounts in the test files, e.g., using the four private keys provided by ganache-cli.
 
 Run the following commands:
 ```
