@@ -48,7 +48,7 @@ $ git clone https://github.com/ownership-labs/DataToken
 $ git clone https://github.com/ownership-labs/dt-contracts
 $ cd DataToken
 $ export PYTHONPATH=$PYTHONPATH:../DataToken
-$ pip install -r requirements.txt
+$ pip install -r requirements.txt --no-deps
 $ python tests/test.py
 ```
 
