@@ -12,13 +12,13 @@ from datatoken.service.tracer import TracerService
 config = Config(filename='./config.ini')
 
 system_account = Wallet(
-    config.web3, private_key='0x8d9e2e57c54e5fe7dc313e940152347a478c1e5be99faad2d92b03d4b87bf574')
+    config.web3, private_key='0x1e771da3a1dcae0fd77a942cc816fd6b9b4cca97220f8ea6c6782a848714129d')
 org1_account = Wallet(
-    config.web3, private_key='0x1f201cd9c47f0d43a1c874436a310d698db9c22591433893e6b00cca3cc2ae44')
+    config.web3, private_key='0x65e5b356ab8369c2971d584ade019c84d898f9b5d77d35940813c24a804d3b43')
 org2_account = Wallet(
-    config.web3, private_key='0x61beae8024eddaf282418de2477283b1865ea2ae81cf4e353143ddd0a97e7b9c')
+    config.web3, private_key='0x243ba7d269e52c5861aca39cfa21cc94c75d43ad4189d666c06bae590a3a5317')
 org3_account = Wallet(
-    config.web3, private_key='0x97dc913aa1b42400b6464228b12b67696101b4e5a618fdd8a091dddcf722ca90')
+    config.web3, private_key='0xc679156774b1ea1ce27e00ea82efd3a1c5ad48d314abae0d1226452546679422')
 
 # print(system_account.address)
 # print(org1_account.address)

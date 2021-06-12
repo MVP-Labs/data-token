@@ -3,7 +3,6 @@
 # SPDX-License-Identifier: LGPL-2.1-only
 
 import copy
-import json
 from datatoken.core.metadata import Metadata
 from datatoken.core.dt_helper import PREFIX
 from datatoken.core.utils import get_timestamp, calc_checksum

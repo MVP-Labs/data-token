@@ -16,9 +16,9 @@ class IPFSProvider:
         ipfs_rpc_endpoint = urlparse(ipfs_rpc_endpoint)
         ipfs_scheme = ipfs_rpc_endpoint.scheme if ipfs_rpc_endpoint.scheme else "http"
         ipfs_port = ipfs_rpc_endpoint.port if ipfs_rpc_endpoint.port else 5001
-
+        
         self.ipfs_client = ipfsapi.connect(
-            urljoin(ipfs_scheme, ipfs_rpc_endpoint.hostname), ipfs_port, session=True)
+            urljoin(ipfs_scheme, ipfs_rpc_endpoint.hostname), ipfs_port)
 
     def add(self, json):
         """
