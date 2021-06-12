@@ -8,60 +8,60 @@ from datatoken.model.constants import Role, Operation
 keeper = Keeper()
 
 system = Wallet(
-    keeper.web3, private_key='4472aa5d4e2efe297784a3d44d840c9652cdb7663e22dedd920958bf6edfaf7e')
+    keeper.web3, private_key='0x8d9e2e57c54e5fe7dc313e940152347a478c1e5be99faad2d92b03d4b87bf574')
 org1 = Wallet(
-    keeper.web3, private_key='5c25a2fb9b5427bbe8b68b4ddc0655ae7621f87a147a489b1337ca166bca0173')
+    keeper.web3, private_key='0x1f201cd9c47f0d43a1c874436a310d698db9c22591433893e6b00cca3cc2ae44')
 user1 = Wallet(
-    keeper.web3, private_key='eee795df5de4fc3636abfcfb6d1741665a903efa2b5ded74cea33ca92111b953')
+    keeper.web3, private_key='0x61beae8024eddaf282418de2477283b1865ea2ae81cf4e353143ddd0a97e7b9c')
 user2 = Wallet(
-    keeper.web3, private_key='6bba7694acf53fd8d02120263e6e5aaacbab4b623f4a401ac835c9d8ec54e122')
+    keeper.web3, private_key='0x97dc913aa1b42400b6464228b12b67696101b4e5a618fdd8a091dddcf722ca90')
 
 #####
 print('add role')
 if not keeper.role_controller.check_role(
-        org1.atp_address, Role.ROLE_ENTERPRISE):
+        org1.address, Role.ROLE_ENTERPRISE):
     keeper.role_controller.add_role(
-        org1.atp_address, Role.ROLE_ENTERPRISE, system)
+        org1.address, Role.ROLE_ENTERPRISE, system)
 
 print(keeper.role_controller.check_role(
-    org1.atp_address, Role.ROLE_ENTERPRISE))
+    org1.address, Role.ROLE_ENTERPRISE))
 
 print(keeper.role_controller.check_permission(
-    org1.atp_address, Operation.MODIFY_ASSET))
+    org1.address, Operation.MODIFY_ASSET))
 
 if not keeper.role_controller.check_role(
-        user1.atp_address, Role.ROLE_PROVIDER):
+        user1.address, Role.ROLE_PROVIDER):
     keeper.role_controller.add_role(
-        user1.atp_address, Role.ROLE_PROVIDER, system)
+        user1.address, Role.ROLE_PROVIDER, system)
 
 print(keeper.role_controller.check_role(
-    user1.atp_address, Role.ROLE_PROVIDER))
+    user1.address, Role.ROLE_PROVIDER))
 print(keeper.role_controller.check_permission(
-    user1.atp_address, Operation.MODIFY_AUTHORIZE))
+    user1.address, Operation.MODIFY_AUTHORIZE))
 
 #####
 print('register enterprise')
-if not keeper.asset_provider.check_enterprise(org1.atp_address):
+if not keeper.asset_provider.check_enterprise(org1.address):
     keeper.asset_provider.register_enterprise(
-        org1.atp_address, 'org1', 'test_org1', system)
+        org1.address, 'org1', 'test_org1', system)
 
-print(keeper.asset_provider.check_enterprise(org1.atp_address))
-print(keeper.asset_provider.get_enterprise(org1.atp_address))
+print(keeper.asset_provider.check_enterprise(org1.address))
+print(keeper.asset_provider.get_enterprise(org1.address))
 
 keeper.asset_provider.update_enterprise(
-    org1.atp_address, 'org1', 'test_org1_update', system)
-print(keeper.asset_provider.get_enterprise(org1.atp_address))
+    org1.address, 'org1', 'test_org1_update', system)
+print(keeper.asset_provider.get_enterprise(org1.address))
 
 #####
 print('add provider')
-if not keeper.asset_provider.check_provider(user1.atp_address):
-    keeper.asset_provider.add_provider(user1.atp_address, system)
-if not keeper.asset_provider.check_provider(user2.atp_address):
-    keeper.asset_provider.add_provider(user2.atp_address, system)
-if not keeper.asset_provider.check_provider(org1.atp_address):
-    keeper.asset_provider.add_provider(org1.atp_address, system)
+if not keeper.asset_provider.check_provider(user1.address):
+    keeper.asset_provider.add_provider(user1.address, system)
+if not keeper.asset_provider.check_provider(user2.address):
+    keeper.asset_provider.add_provider(user2.address, system)
+if not keeper.asset_provider.check_provider(org1.address):
+    keeper.asset_provider.add_provider(org1.address, system)
 
-print(keeper.asset_provider.check_provider(user1.atp_address))
+print(keeper.asset_provider.check_provider(user1.address))
 
 #####
 print('publish template')
@@ -88,25 +88,25 @@ dt3 = '0x7465737400000000000000000000000000000000000000000000000000000033'
 dt4 = '0x7465737400000000000000000000000000000000000000000000000000000044'
 checksum_test = '0x7465737400000000000000000000000000000000000000000000000000000000'
 
-keeper.dt_factory.mint_dt(dt1, user1.atp_address,
+keeper.dt_factory.mint_dt(dt1, user1.address,
                           True, checksum_test, 'ipfs_path_url1', org1)
 print(keeper.dt_factory.check_dt_available(dt1))
 print(keeper.dt_factory.get_dt_register(dt1))
 
-keeper.dt_factory.mint_dt(dt2, user2.atp_address,
+keeper.dt_factory.mint_dt(dt2, user2.address,
                           True, checksum_test, 'ipfs_path_url2', org1)
 print(keeper.dt_factory.check_dt_available(dt2))
 print(keeper.dt_factory.get_dt_register(dt2))
 
-keeper.dt_factory.mint_dt(dt3, org1.atp_address,
+keeper.dt_factory.mint_dt(dt3, org1.address,
                           False, checksum_test, 'ipfs_path_url3', org1)
 print(keeper.dt_factory.check_dt_available(dt3))
 print(keeper.dt_factory.get_dt_register(dt3))
 
-keeper.dt_factory.mint_dt(dt4, org1.atp_address,
+keeper.dt_factory.mint_dt(dt4, org1.address,
                           False, checksum_test, 'ipfs_path_url4', org1)
 
-print(keeper.dt_factory.get_owner_assets(org1.atp_address))
+print(keeper.dt_factory.get_owner_assets(org1.address))
 
 #####
 print('grant asset')

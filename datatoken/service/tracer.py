@@ -1,12 +1,11 @@
 """Tracer service module."""
-# Copyright 2021 The dt-sdk Authors
+# Copyright 2021 The DataToken Authors
 # SPDX-License-Identifier: LGPL-2.1-only
 
 import logging
 
 from datatoken.core.dt_helper import DTHelper
-from datatoken.store.ipfs_provider import IPFSProvider
-from datatoken.store.asset_resolve import resolve_asset, resolve_op
+from datatoken.store.asset_resolve import resolve_asset
 from datatoken.model.keeper import Keeper
 from datatoken.service.verifier import VerifierService
 

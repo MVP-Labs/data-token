@@ -1,5 +1,5 @@
 """Role Controller"""
-# Copyright 2021 The dt-web3 Authors
+# Copyright 2021 The DataToken Authors
 # SPDX-License-Identifier: LGPL-2.1-only
 
 import logging

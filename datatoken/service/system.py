@@ -1,5 +1,5 @@
 """System service module."""
-# Copyright 2021 The dt-sdk Authors
+# Copyright 2021 The DataToken Authors
 # SPDX-License-Identifier: LGPL-2.1-only
 
 import logging
@@ -74,7 +74,7 @@ class SystemService:
 
         op.add_metadata(metadata)
         op.add_template(operation, params)
-        op.add_creator(from_wallet.atp_address)
+        op.add_creator(from_wallet.address)
         op.assign_tid(DTHelper.generate_new_dt())
         op.create_proof()
 

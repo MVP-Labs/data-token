@@ -3,12 +3,10 @@
 #  Copyright 2018 Ocean Protocol Foundation
 
 import re
-import hashlib
-import json
 import uuid
 from web3 import Web3
 from eth_utils import remove_0x_prefix
-from datatoken.core.utils import calc_checksum, convert_to_string
+from datatoken.core.utils import convert_to_string
 
 PREFIX = 'dt:ownership:'
 

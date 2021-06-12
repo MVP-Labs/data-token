@@ -1,5 +1,5 @@
 #  Modified from Ocean.py library.
-#  Copyright 2018 Ocean Protocol Foundation
+#  Copyright 2021 Ocean Protocol Foundation
 #  SPDX-License-Identifier: Apache-2.0
 
 import logging
@@ -11,8 +11,16 @@ logger = logging.getLogger(__name__)
 
 
 class EventFilter:
-    def __init__(self, event_name, event, argument_filters, from_block, to_block,
-                 poll_interval=None):
+    def __init__(
+        self,
+        event_name,
+        event,
+        argument_filters,
+        from_block,
+        to_block,
+        poll_interval=None,
+    ):
+        """Initialises EventFilter."""
         self.event_name = event_name
         self.event = event
         self.argument_filters = argument_filters
@@ -26,7 +34,7 @@ class EventFilter:
         return self._filter.filter_id if self._filter else None
 
     def uninstall(self):
-        Web3Provider.get_web3().eth.uninstallFilter(self._filter.filter_id)
+        Web3Provider.get_web3().eth.uninstall_filter(self._filter.filter_id)
 
     def set_poll_interval(self, interval):
         self._poll_interval = interval
@@ -40,7 +48,7 @@ class EventFilter:
         self._filter = self.event().createFilter(
             fromBlock=self.block_range[0],
             toBlock=self.block_range[1],
-            argument_filters=self.argument_filters
+            argument_filters=self.argument_filters,
         )
         if self._poll_interval is not None:
             self._filter.poll_interval = self._poll_interval
@@ -58,14 +66,17 @@ class EventFilter:
                 logs = entries_getter()
                 if logs:
                     logger.debug(
-                        f'found event logs: event-name={self.event_name}, '
-                        f'range={self.block_range}, '
-                        f'logs={logs}')
+                        f"found event logs: event-name={self.event_name}, "
+                        f"range={self.block_range}, "
+                        f"logs={logs}"
+                    )
                     return logs
             except ValueError as e:
-                if 'Filter not found' in str(e):
-                    logger.debug(f'recreating filter (Filter not found): event={self.event_name}, '
-                                 f'arg-filter={self.argument_filters}, from/to={self.block_range}')
+                if "Filter not found" in str(e):
+                    logger.debug(
+                        f"recreating filter (Filter not found): event={self.event_name}, "
+                        f"arg-filter={self.argument_filters}, from/to={self.block_range}"
+                    )
                     time.sleep(1)
                     self._create_filter()
                 else:

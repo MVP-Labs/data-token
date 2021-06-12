@@ -2,7 +2,7 @@
 #  Copyright 2018 Ocean Protocol Foundation
 #  SPDX-License-Identifier: Apache-2.0
 
-from alaya import HTTPProvider
+from web3 import HTTPProvider
 
 from datatoken.web3.web3_overrides.request import make_post_request
 

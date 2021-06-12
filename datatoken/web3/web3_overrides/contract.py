@@ -5,7 +5,7 @@
 import logging
 import time
 
-from alaya.contract import prepare_transaction
+from web3.contract import prepare_transaction
 
 from datatoken.web3.wallet import Wallet
 

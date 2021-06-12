@@ -28,18 +28,18 @@ Specifically, only when the pre-declared constraints are satisfied, assets will 
 
 ### highlights
 
-The dt-sdk implements several key services for data collaboration, including System module, Asset module, Job module, Tracer module and Verifier module. Different modules are designed for different participators:
+The repo provides several key services for data collaboration, including System module, Asset module, Job module, Tracer module and Verifier module. Different modules are designed for different participators:
 
 - System administrators can manage asset providers and trusted operators that are registered on the blockchain by using the System module;
 - Asset providers and aggregators can use the Asset module to publish datasets/computation/algorithms, and validate service agreements and then authorize the aggregation of data unions;
 - Demanders and solvers can use the Job module to create tasks and submit solutions (e.g., off-chain data collaboration). Asset providers can also quickly verify remote execution;
 - Regulatory parties can use the Tracer module to check the whole lifecycle of cross-domain data sharing and utilization, ensuring the user privacy and legality of data monetization. Also, the data traders can price data as assets based on their origins and historical market information.
 
-The definition of data unions and trusted workflow service specification can be found in the [dt-asset](https://github.com/ownership-labs/dt-asset) repository.
+The definition of data unions and trusted workflow service specification can be found in the [AuthComputa](https://github.com/ownership-labs/AuthComputa) repository.
 
 ### play with it
 
-You first need to deploy dt-contracts to the Alaya private chain, refer to [Deployment Tutorial](https://github.com/ownership-labs/dt-contracts). We use the four predefined accounts for testing, and also set up the config.ini in the DataToken directory (e.g., artifacts_path and address_file).
+You first need to deploy dt-contracts to the Alaya private chain, refer to [Deployment Tutorial](https://github.com/ownership-labs/dt-contracts). Then set up the config.ini in the DataToken directory (e.g., artifacts_path and address_file), and modify the accounts in the test files, e.g., using the four private keys provided by ganache-cli。
 
 Run the following commands:
 ```

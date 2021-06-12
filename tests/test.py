@@ -2,27 +2,28 @@
 
 from datatoken.config import Config
 from datatoken.web3.wallet import Wallet
-from datatoken.web3.utils import hash_and_sign
+from datatoken.web3.utils import add_ethereum_prefix_and_hash_msg
 from datatoken.service.system import SystemService
 from datatoken.service.asset import AssetService
 from datatoken.service.job import JobService
 from datatoken.service.tracer import TracerService
 
+
 config = Config(filename='./config.ini')
 
 system_account = Wallet(
-    config.web3, private_key='4472aa5d4e2efe297784a3d44d840c9652cdb7663e22dedd920958bf6edfaf7e')
+    config.web3, private_key='0x8d9e2e57c54e5fe7dc313e940152347a478c1e5be99faad2d92b03d4b87bf574')
 org1_account = Wallet(
-    config.web3, private_key='5c25a2fb9b5427bbe8b68b4ddc0655ae7621f87a147a489b1337ca166bca0173')
+    config.web3, private_key='0x1f201cd9c47f0d43a1c874436a310d698db9c22591433893e6b00cca3cc2ae44')
 org2_account = Wallet(
-    config.web3, private_key='eee795df5de4fc3636abfcfb6d1741665a903efa2b5ded74cea33ca92111b953')
+    config.web3, private_key='0x61beae8024eddaf282418de2477283b1865ea2ae81cf4e353143ddd0a97e7b9c')
 org3_account = Wallet(
-    config.web3, private_key='6bba7694acf53fd8d02120263e6e5aaacbab4b623f4a401ac835c9d8ec54e122')
+    config.web3, private_key='0x97dc913aa1b42400b6464228b12b67696101b4e5a618fdd8a091dddcf722ca90')
 
-print(system_account.atp_address)
-print(org1_account.atp_address)
-print(org2_account.atp_address)
-print(org3_account.atp_address)
+# print(system_account.address)
+# print(org1_account.address)
+# print(org2_account.address)
+# print(org3_account.address)
 
 system_service = SystemService(config)
 asset_service = AssetService(config)
@@ -31,16 +32,16 @@ tracer_service = TracerService(config)
 
 ############
 system_service.register_enterprise(
-    org1_account.atp_address, 'org1', 'test_org1', system_account)
-system_service.add_provider(org1_account.atp_address, system_account)
+    org1_account.address, 'org1', 'test_org1', system_account)
+system_service.add_provider(org1_account.address, system_account)
 
 system_service.register_enterprise(
-    org2_account.atp_address, 'org2', 'test_org2', system_account)
-system_service.add_provider(org2_account.atp_address, system_account)
+    org2_account.address, 'org2', 'test_org2', system_account)
+system_service.add_provider(org2_account.address, system_account)
 
 system_service.register_enterprise(
-    org3_account.atp_address, 'org3', 'test_org3', system_account)
-system_service.add_provider(org3_account.atp_address, system_account)
+    org3_account.address, 'org3', 'test_org3', system_account)
+system_service.add_provider(org3_account.address, system_account)
 
 
 metadata = {'main': {'name': 'add_op',
@@ -72,7 +73,7 @@ service = {
 }
 
 ddo1 = asset_service.generate_ddo(
-    metadata, [service], org1_account.atp_address, verify=True)
+    metadata, [service], org1_account.address, verify=True)
 asset_service.publish_dt(ddo1, org1_account)
 
 metadata = {'main': {'name': 'leaf data2',
@@ -93,7 +94,7 @@ service = {
 }
 
 ddo2 = asset_service.generate_ddo(
-    metadata, [service], org2_account.atp_address, verify=True)
+    metadata, [service], org2_account.address, verify=True)
 asset_service.publish_dt(ddo2, org2_account)
 
 metadata = {'main': {'type': 'Dataset',
@@ -157,15 +158,17 @@ service1 = {
 }
 
 ddo3 = asset_service.generate_ddo(
-    metadata, [service, service1], org3_account.atp_address, child_dts=child_dts, verify=True)
+    metadata, [service, service1], org3_account.address, child_dts=child_dts, verify=True)
 asset_service.publish_dt(ddo3, org3_account)
 
-msg = f'{org3_account.atp_address}{ddo3.dt}'
-signature = hash_and_sign(msg, org3_account)
+msg = f'{org3_account.address}{ddo3.dt}'
+msg_hash = add_ethereum_prefix_and_hash_msg(msg)
+signature = org3_account.sign(msg_hash).signature.hex()
+
 print(asset_service.check_service_terms(
-    ddo3.dt, ddo1.dt, org1_account.atp_address, signature))
+    ddo3.dt, ddo1.dt, org1_account.address, signature))
 print(asset_service.check_service_terms(
-    ddo3.dt, ddo2.dt, org2_account.atp_address, signature))
+    ddo3.dt, ddo2.dt, org2_account.address, signature))
 
 asset_service.grant_dt_perm(ddo1.dt, ddo3.dt, org1_account)
 asset_service.grant_dt_perm(ddo2.dt, ddo3.dt, org2_account)
@@ -202,13 +205,15 @@ service1 = {
 }
 
 ddo4 = asset_service.generate_ddo(
-    metadata, [service1], org3_account.atp_address, child_dts=child_dts, verify=True)
+    metadata, [service1], org3_account.address, child_dts=child_dts, verify=True)
 asset_service.publish_dt(ddo4, org3_account)
 
-msg = f'{org3_account.atp_address}{ddo4.dt}'
-signature = hash_and_sign(msg, org3_account)
+msg = f'{org3_account.address}{ddo4.dt}'
+msg_hash = add_ethereum_prefix_and_hash_msg(msg)
+signature = org3_account.sign(msg_hash).signature.hex()
+
 print(asset_service.check_service_terms(
-    ddo4.dt, ddo3.dt, org3_account.atp_address, signature))
+    ddo4.dt, ddo3.dt, org3_account.address, signature))
 
 asset_service.grant_dt_perm(ddo3.dt, ddo4.dt, org3_account)
 asset_service.activate_cdt(ddo4.dt, ddo4.child_dts, org3_account)
@@ -244,13 +249,15 @@ service1 = {
 }
 
 ddo5 = asset_service.generate_ddo(
-    metadata, [service1], org3_account.atp_address, child_dts=child_dts, verify=True)
+    metadata, [service1], org3_account.address, child_dts=child_dts, verify=True)
 asset_service.publish_dt(ddo5, org3_account)
 
-msg = f'{org3_account.atp_address}{ddo5.dt}'
-signature = hash_and_sign(msg, org3_account)
+msg = f'{org3_account.address}{ddo5.dt}'
+msg_hash = add_ethereum_prefix_and_hash_msg(msg)
+signature = org3_account.sign(msg_hash).signature.hex()
+
 print(asset_service.check_service_terms(
-    ddo5.dt, ddo3.dt, org3_account.atp_address, signature))
+    ddo5.dt, ddo3.dt, org3_account.address, signature))
 
 asset_service.grant_dt_perm(ddo3.dt, ddo5.dt, org3_account)
 asset_service.activate_cdt(ddo5.dt, ddo5.child_dts, org3_account)
@@ -260,10 +267,12 @@ task_id = job_service.create_task('test', 'test_task', org3_account)
 job_id = job_service.add_job(task_id, ddo4.dt, org3_account)
 job_id = job_service.add_job(task_id, ddo4.dt, org3_account)
 
-msg = f'{org3_account.atp_address}{job_id}'
-signature = hash_and_sign(msg, org3_account)
+msg = f'{org3_account.address}{job_id}'
+msg_hash = add_ethereum_prefix_and_hash_msg(msg)
+signature = org3_account.sign(msg_hash).signature.hex()
+
 print(job_service.check_remote_compute(ddo4.dt, ddo3.dt,
-                                       job_id, org3_account.atp_address, signature))
+                                       job_id, org3_account.address, signature))
 
 job_id = job_service.add_job(task_id, ddo5.dt, org3_account)
 
@@ -276,5 +285,5 @@ if tree:
 
 
 print(tracer_service.get_marketplace_stat())
-print(asset_service.get_dt_marketplace())
 print(asset_service.get_dt_details(ddo4.dt))
+print(asset_service.get_dt_marketplace())

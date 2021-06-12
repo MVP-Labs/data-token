@@ -28,18 +28,18 @@
 
 ### 功能特性
 
-该仓库下的dt-sdk封装了数据协作过程中的几个关键服务模块，包括系统管理模块、资产管理模块、任务工作模块、跨域追溯模块和服务验证模块。不同的业务角色可以使用不同的模块：
+该仓库下封装了数据协作过程中的几个关键服务模块，包括系统管理模块、资产管理模块、任务工作模块、跨域追溯模块和服务验证模块。不同的业务角色可以使用不同的模块：
 
 - 系统管理员可通过系统模块来管理链上的资产提供方和可信算子模版；
 - 资产提供方和聚合方可通过资产模块来实现数据资产和数据联合体的发布、服务验证和授权聚合；
 - 需求方和求解方可通过任务工作模块来完成任务发布和计算求解，资产方也可快速验证远程计算；
 - 监管方可通过跨域追溯模块来确认资产的合理利用，交易方也可根据资产的来源和历史生命周期来定价。
 
-关于数据联合体的定义和分布式可信计算的服务规范可参考[dt-asset](https://github.com/ownership-labs/dt-asset)仓库。
+关于数据联合体的定义和分布式可信计算的服务规范可参考[AuthComputa](https://github.com/ownership-labs/AuthComputa)仓库。
 
 ### 运行流程
 
-在运行测试前，首先需要部署dt-contracts到alaya私链，参考[部署教程](https://github.com/ownership-labs/dt-contracts)，使用其中预先设置的四个账户。同时配置DataToken目录下的config.ini，包括artifacts_path和address_file。
+在运行测试前，首先需要部署dt-contracts，参考[部署教程](https://github.com/ownership-labs/dt-contracts)。同时配置DataToken目录下的config.ini，包括artifacts_path和address_file。修改tests目录中测试文件的账户，例如ganache-cli提供的前四个私钥。
 
 使用如下命令测试：
 ```

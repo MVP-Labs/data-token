@@ -4,8 +4,7 @@
 import lru
 import requests
 from requests.adapters import HTTPAdapter
-from alaya.utils.caching import generate_cache_key
-
+from web3._utils.caching import generate_cache_key
 
 def _remove_session(key, session):
     session.close()

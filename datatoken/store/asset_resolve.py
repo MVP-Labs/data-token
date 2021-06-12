@@ -36,6 +36,9 @@ def resolve_asset(dt, keeper_dt_factory):
 
 
 def resolve_asset_by_url(metadata_url):
+    if not metadata_url.startswith('Qm'):
+        return None
+
     ipfs_client = IPFSProvider()
     ddo_json = ipfs_client.get(metadata_url)
     if not ddo_json:
