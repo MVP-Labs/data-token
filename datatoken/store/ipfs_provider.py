@@ -1,24 +1,18 @@
 """IPFS provider Lib."""
-# Copyright 2021 The dt-asset Authors
+# Copyright 2021 The DataToken Authors
 # SPDX-License-Identifier: LGPL-2.1-only
 
-from urllib.parse import urljoin
-from rfc3986 import urlparse
-import ipfsapi
-
+import ipfshttpclient
 
 class IPFSProvider:
     """Asset storage provider."""
 
-    def __init__(self):
-        """Initialize the provider by using singnet ipfs gateway."""
-        ipfs_rpc_endpoint = "https://ipfs.singularitynet.io:80"
-        ipfs_rpc_endpoint = urlparse(ipfs_rpc_endpoint)
-        ipfs_scheme = ipfs_rpc_endpoint.scheme if ipfs_rpc_endpoint.scheme else "http"
-        ipfs_port = ipfs_rpc_endpoint.port if ipfs_rpc_endpoint.port else 5001
-        
-        self.ipfs_client = ipfsapi.connect(
-            urljoin(ipfs_scheme, ipfs_rpc_endpoint.hostname), ipfs_port)
+    def __init__(self, config=None):
+        """Initialize the ipfs provider."""
+        if config:
+            self.ipfs_client = ipfshttpclient.connect(config.ipfs_endpoint)
+        else:
+            self.ipfs_client = ipfshttpclient.connect()
 
     def add(self, json):
         """

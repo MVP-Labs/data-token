@@ -64,7 +64,7 @@ class AssetService(object):
         :param issuer_wallet: issuer account, enterprize now
         :return
         """
-        ipfs_client = IPFSProvider()
+        ipfs_client = IPFSProvider(self.config)
         ipfs_path = ipfs_client.add(ddo.to_dict())
 
         dt = DTHelper.dt_to_id(ddo.dt)

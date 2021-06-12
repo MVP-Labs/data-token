@@ -20,8 +20,8 @@ Specifically, only when the pre-declared constraints are satisfied, assets will 
 | Module                     | Description                                                                                     |
 | -------------------------- | ----------------------------------------------------------------------------------------------- |
 | [dt-contracts](https://github.com/ownership-labs/dt-contracts)            | smart contracts for data token                                          |
-| [DataToken](https://github.com/ownership-labs/DataToken)           | access control for decentralized data and runtime for computing monetization                                       |
-| [Compute-to-Data](https://github.com/ownership-labs/Compute-to-Data)            | smart data grid and on-premiese computing system |
+| [DataToken](https://github.com/ownership-labs/DataToken)           | access control for decentralized data and runtime for computation monetization                                       |
+| [Compute-to-Data](https://github.com/ownership-labs/Compute-to-Data)            | smart data grid and on-premise computing system |
 | [AuthComputa](https://github.com/ownership-labs/AuthComputa)             | data science framework for constrained, authorized, privacy-preserving ML |
 
 

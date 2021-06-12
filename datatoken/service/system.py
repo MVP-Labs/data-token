@@ -78,7 +78,7 @@ class SystemService:
         op.assign_tid(DTHelper.generate_new_dt())
         op.create_proof()
 
-        ipfs_client = IPFSProvider()
+        ipfs_client = IPFSProvider(self.config)
         ipfs_path = ipfs_client.add(op.to_dict())
 
         tid = DTHelper.dt_to_id(op.tid)

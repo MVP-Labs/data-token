@@ -13,7 +13,7 @@ NAME_ARTIFACTS_PATH = 'artifacts_path'
 NAME_ADDRESS_FILE = 'address_file'
 NAME_NETWORK_URL = 'network_url'
 NAME_NETWORK = 'network_name'
-
+NAME_IPFS_ENDPOINT = 'ipfs_endpoint'
 
 class Config(ConfigParser):
     def __init__(self, filename=None, options_dict=None):
@@ -51,6 +51,11 @@ class Config(ConfigParser):
     def network_name(self):
         """get the name of the network."""
         return self.get(self._keeper_section, NAME_NETWORK)
+
+    @property
+    def ipfs_endpoint(self):
+        """get the name of the network."""
+        return self.get(self._keeper_section, NAME_IPFS_ENDPOINT)
 
     @property
     def artifacts_path(self):
